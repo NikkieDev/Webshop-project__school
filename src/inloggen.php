@@ -21,6 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $fingerprint->login($_POST["email"], $_POST["password"]);
+
+        if (isset($_GET['referrer'])) {
+            header("Location: " . $_GET["referrer"] . "?referrer=inloggen.php");
+            return;
+        }
+
         header("Location: index.php?referrer=inloggen.php");
     } catch (Exception $e) {
         header("Location: inloggen.php?flash=" . $e->getMessage());

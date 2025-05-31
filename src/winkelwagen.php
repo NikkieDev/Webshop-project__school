@@ -53,6 +53,7 @@ $referrer = $_GET['referrer'];
                             </div>
                         </div>
                     <?php } ?>
+                    <a href="afrekenen.php">Afrekenen</a>
                 </div>
             </div>
         <?php } ?>

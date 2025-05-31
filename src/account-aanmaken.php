@@ -23,6 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $userService->transformGuestToUser($_POST['username'], $_POST['password'], $_POST['email'], $fingerprint->getUser());
+
+        if (isset($_GET['referrer'])) {
+            header("Location: " . $_GET["referrer"] . "?referrer=account-aanmaken.php");
+            return;
+        }
+
         header("Location: index.php?referrer=account-aanmaken.php");
     } catch (Exception $e) {
         header("Location: account-aanmaken.php?flash=" . $e->getMessage());

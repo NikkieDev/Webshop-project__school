@@ -9,3 +9,17 @@ Currently:
 * Sign up
 * Reactive cart item management
 * Log in
+* Back track to link after login/signup (Untested)
+
+To do for user:
+user make order
+user cancel order
+user change password
+user change email
+
+To do pages for user:
+product-detail
+
+to do for render:
+categories for products
+Nav everywhere

@@ -32,6 +32,7 @@ $fingerprint = FingerprintService::getInstance();
             <div class="fixed-right">
                 <?php if ($fingerprint->isGuest()) { ?>
                     <a class="nav-item" href="account-aanmaken.php?referrer=index.php">Aanmelden</a>
+                    <a class="nav-item" href="inloggen.php?referrer=index.php">Inloggen</a>
                 <?php } else { ?>
                     <a class="nav-item" href="ajax/logout.php?referrer=index.php">Uitloggen</a>
                 <?php } ?>
