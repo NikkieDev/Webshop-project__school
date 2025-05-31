@@ -1,0 +1,12 @@
+.products {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.product-wrapper {
+    padding: 12px 24px;
+    background-color: white;
+    height: fit-content;
+    width: fit-content;
+}

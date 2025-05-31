@@ -1,0 +1,11 @@
+Currently:
+
+* Guests
+* Carts
+* Adding to cart
+* Listing a cart
+* removing from Carts
+* Transfer account from Guest to User
+* Sign up
+* Reactive cart item management
+* Log in

@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+class Util
+{
+    public function verifyPropertyExists($haystack, $needleArray)
+    {
+        foreach ($needleArray as $needle) {
+            if ($haystack[$needle]) {
+                return;
+            }
+
+            throw new Exception("Property " . $needle . " is missing");
+        }
+    }
+}

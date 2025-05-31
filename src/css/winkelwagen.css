@@ -1,0 +1,26 @@
+.cart-items--wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cart-item--wrapper {
+    margin: 4px;
+    padding: 12px 24px;
+    background-color: white;
+}
+
+.cart-item {
+    width: 720px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cart-item__meta--wrapper {
+    gap: 4px;
+}
+
+.cart-item__dynamic--wrapper {
+    margin-left: auto;
+}

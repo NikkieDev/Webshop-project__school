@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+* {
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;;
+}
+
+html, body {
+    min-height: 100dvh;
+    min-width: 100dvw;
+    padding: 0;
+    margin: 0;
+    background-color: #f4f0fd;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: start; */
+}
+
+section {
+    max-width: 1280px;
+    display: flex;
+    padding: 24px 32px;
+    margin: 0 auto;
+}
+
+button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+nav {
+    background-color: #2f5978;
+    width: 1280px;
+    margin: 0 auto;
+    padding: 12px;
+    display: flex;
+}
+
+nav>.fixed-right {
+    margin-left: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+input {
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 6px 12px;
+}
+
+.header-wrapper {
+    flex-direction: column;
+}
+
+.nav-item {
+    background-color: #8aaeb5;
+    color: white;
+    text-decoration: none;
+    color: black;
+    padding: 4px 8px;
+}
+
+.flash-card {
+    padding: 12px 24px;
+    border-radius: 12px;
+    max-width: fit-content;
+    margin: 12px;
+}
+
+.flash-warning {
+    background-color: rgba(249,106,51,0.1);
+    border: 1px solid #f96a33;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-wrapper {
+    background-color: rgba(255,255,255,0.6);
+    box-shadow: 3px 6px 12px 3px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
