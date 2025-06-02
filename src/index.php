@@ -47,7 +47,7 @@ $fingerprint = FingerprintService::getInstance();
                         <?php $productUuid = $product['uuid']; ?>
                         <h3 class="product-name"><?php echo $product['title']; ?></h3>
                         <span class="product-price`">&euro; <?php echo $product['price']; ?></span>
-                        <button onclick="addtoCart('<?php echo $productUuid ?>')">Toevoegen</button>
+                        <button onclick="addToCart('<?php echo $productUuid ?>')">Toevoegen</button>
                     </div>
                 </div>
             <?php } ?>

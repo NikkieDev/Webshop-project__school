@@ -8,4 +8,4 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./config/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/config/init.sql:/docker-entrypoint-initdb.d/init.sql
