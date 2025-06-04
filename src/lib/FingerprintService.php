@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once "db.php";
-
 require_once "model/User.php";
 require_once 'repository/UserRepository.php';
 
