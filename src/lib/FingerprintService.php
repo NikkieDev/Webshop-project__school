@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 require_once "model/User.php";
 require_once 'repository/UserRepository.php';
+require_once 'SessionManager.php';
 
 class FingerprintService
 {
     private User $user;
     private UserRepository $userRepository; 
+    private SessionManager $session;
     
     private static ?FingerprintService $instance = null;
 
@@ -24,6 +26,7 @@ class FingerprintService
 
     private function __construct()
     {
+        $this->session = SessionManager::getInstance();
         $this->userRepository = new UserRepository();
         $this->user = new User();
         
@@ -39,15 +42,15 @@ class FingerprintService
             $this->user->setType($user['type']);
             $this->user->setUsername($user['username']);
     
-            $_SESSION['username'] = $user['username'];
+            $this->session->set('username', $user['username']);
         } else {
-            $this->clearUser();
-            $this->setGuest();
+            $this->logout();
         }
     }
+
     public function getUser()
     {
-        return $_COOKIE['user'];
+        return $this->session->getUser();
     }
 
     public function isGuest(): bool
@@ -62,6 +65,7 @@ class FingerprintService
         if ($user) {
             $userData = $this->userRepository->getUserDataByCredentials($email, $password);
 
+            $this->session->unset($this->getUser());
             $this->clearUser();
             $this->setUser($userData);
         } else {

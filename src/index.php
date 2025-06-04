@@ -6,8 +6,10 @@ session_start();
 
 require_once 'lib/loadProducts.php';
 require_once 'lib/FingerprintService.php';
+require_once 'lib/SessionManager.php';
 
 $fingerprint = FingerprintService::getInstance();
+$session = SessionManager::getInstance();
 ?>  
 
 <html>
@@ -20,9 +22,10 @@ $fingerprint = FingerprintService::getInstance();
     <script src="/js/cart.js" defer></script>
 </head>
 <body>
+    <?php $session->dump() ?>
     <section class="header-wrapper">
-        <?php if ($_SESSION['username']) { ?>
-            <h3>Welcome, <?php echo $_SESSION['username'] ?></h3>
+        <?php if ($session->get('username')) { ?>
+            <h3>Welcome, <?php echo $session->get('username') ?></h3>
         <?php } ?>
         <nav>
             <div class="nav-item--wrapper">

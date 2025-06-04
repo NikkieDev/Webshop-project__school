@@ -17,7 +17,7 @@ if (!$fingerprint->isGuest()) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $util = new Util();
 
-    $util->verifyPropertyExists("email", "password");
+    $util->verifyPropertyExists($_POST, ['email', 'password']);
 
     try {
         $fingerprint->login($_POST["email"], $_POST["password"]);

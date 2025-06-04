@@ -29,8 +29,8 @@ final class CartRepository extends BaseRepository
     {
         $stmt = $this->getConnection()->prepare("
             SELECT c.uuid AS uuid FROM Cart as c
-                INNER JOIN User as u ON u.uuid = :userUuid
-            WHERE c.status = 0
+                INNER JOIN User as u ON u.uuid = c.userUuid
+            WHERE c.status = 0 AND c.userUuid = :userUuid
         ");
 
         $stmt->execute([':userUuid' => $userUuid]);

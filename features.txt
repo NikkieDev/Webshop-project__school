@@ -16,7 +16,6 @@ user make order
 user cancel order
 user change password
 user change email
-Make sessions per user (SessionManager), prevents session leakage
 
 To do pages for user:
 product-detail

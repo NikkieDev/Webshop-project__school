@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 require_once "repository/CartRepository.php";
 require_once 'FingerprintService.php';
+require_once 'SessionManager.php';
 
 class CartManager
 {
     private CartRepository $cartRepository;
     private FingerprintService $fingerprintService;
+    private SessionManager $session;
     private ?string $cart;
     private static ?CartManager $instance = null;
 
@@ -24,25 +26,18 @@ class CartManager
     
     private function __construct()
     {
-        $this->dbManager = new Db();
         $this->fingerprintService = FingerprintService::getInstance();
+        $this->cartRepository = new CartRepository();
+        $this->session = SessionManager::getInstance();
 
-        if (!isset($_SESSION['cart'])) {
-            $this->cart = $this->cartRepository->getUserActiveCart($this->fingerprintService->getUser());
-
-            if (empty($this->cart)) {
-                $this->cart = $this->createCart();
-            }
-
-            $_SESSION['cart'] = $this->cart;
-        } else {
-            $this->cart = $_SESSION['cart'];
-        }
+        echo "Cart received for user  " . $this->fingerprintService->getUser();
+        $this->cart = $this->cartRepository->getUserActiveCart($this->fingerprintService->getUser());
+        $this->session->set('cart', $this->cart);
     }
 
     public function getCart()
     {
-        return $_SESSION['cart'];
+        return $this->session->get('cart');
     }
 
     public function createCart(): string
@@ -57,8 +52,7 @@ class CartManager
         try {
             $this->cartRepository->addToCart($this->getCart(), $productUuid);
         } catch (Exception $e) {
-            unset($_SESSION['cart']);
-            $this->createCart();
+            $this->resetCart();
         }
     }
 
@@ -67,8 +61,7 @@ class CartManager
         try {
             $this->cartRepository->removeFromCart($this->getCart(), $productUuid);
         } catch (Exception $e) {
-            unset($_SESSION['cart']);
-            $this->createCart();
+            $this->resetCart();
         }
     }
 
@@ -85,6 +78,11 @@ class CartManager
         return $quantified;
     }
 
+    private function resetCart()
+    {
+        $this->session->unset('cart');
+        $this->createCart();
+    }
 
     private function quantifyItems(array $items): mixed
     {
