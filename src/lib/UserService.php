@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-require_once "db.php";
+require_once "repository/UserRepository.php";
 
 class UserService
 {
-    private Db $dbManager;
+    private UserRepository $userRepository;
 
-    public function __construct() {
-        $this->dbManager = new Db();
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
     }
 
     public function transformGuestToUser($username, $password, $email, $user)
@@ -17,7 +18,7 @@ class UserService
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         try {
-            return $this->dbManager->transformGuestToUser($username, $hashed_password, $email, $user);
+            return $this->userRepository->transformGuestToUser($username, $hashed_password, $email, $user);
         } catch (Exception $e) {
             throw $e;
         }

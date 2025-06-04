@@ -1,0 +1,86 @@
+<?php
+
+declare(strict_types=1);
+
+require_once "BaseRepository.php";
+
+final class UserRepository extends BaseRepository
+{
+
+    public function getUser($uuid)
+    {
+        $stmt = $this->getConnection()->prepare("SELECT username, `type` FROM User WHERE uuid = :uuid");
+        $stmt->execute([':uuid' => $uuid]);
+        
+        $results = $stmt->fetchAll();
+        
+        if (0 == count($results)) {
+            return null;
+        }
+
+        return $results[0];
+    }
+
+    public function getUserDataByCredentials($email, $password): mixed
+    {
+        $stmt = $this->getConnection()->prepare("SELECT uuid, username, `password`, `type` FROM User WHERE email = :mail");
+        $stmt->execute([':mail' => $email]);
+
+        $result = $stmt->fetch();
+
+        if (!$result) {
+            throw new Exception("Gebruiker bestaat niet.");
+        }
+
+        if (password_verify($password, $result['password'])) {
+            return $result;
+        } else {
+            throw new Exception("Uw wachtwoord klopt niet.");
+        }
+    }
+
+    public function userWithEmailExists($email): bool | string
+    {
+        $stmt = $this->getConnection()->prepare("SELECT uuid FROM User WHERE email = :mail");
+        $stmt->execute([':mail' => $email]);
+
+        $result = $stmt->fetch();
+
+        if (!$result) {
+            return false;
+        }
+
+        return $result['uuid'];
+    }
+
+    public function createGuest()
+    {
+        $uuid = $this->generateUUID();
+        $stmt = $this->getConnection()->prepare("INSERT INTO User (uuid) VALUES (:uuid)");
+        $stmt->execute([':uuid' => $uuid]);
+
+        return $uuid;
+    }
+
+    public function transformGuestToUser($username, $password, $email, $guestUuid)
+    {
+        if ($this->userWithEmailExists($email)) {
+            throw new Exception("Gebruiker met dit e-mail adres bestaat al!");
+        }
+
+        $stmt = $this->getConnection()->prepare("
+            UPDATE User SET username = :username, password = :hash, email = :mail, type = :userType
+            WHERE uuid = :uuid
+        ");
+
+        $stmt->execute([
+            ":username" => $username,
+            ":hash" => $password,
+            ":mail" => $email,
+            ":userType" => UserType::USER,
+            ":uuid" => $guestUuid
+        ]);
+
+        return $guestUuid;
+    }
+}

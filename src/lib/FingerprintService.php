@@ -5,11 +5,13 @@ declare(strict_types=1);
 require_once "db.php";
 
 require_once "model/User.php";
+require_once 'repository/UserRepository.php';
 
 class FingerprintService
 {
-    private Db $dbManager;
     private User $user;
+    private UserRepository $userRepository; 
+    
     private static ?FingerprintService $instance = null;
 
     public static function getInstance()
@@ -24,7 +26,7 @@ class FingerprintService
 
     private function __construct()
     {
-        $this->dbManager = new Db();
+        $this->userRepository = new UserRepository();
         $this->user = new User();
         
         if (empty($_COOKIE['user'])) {
@@ -33,7 +35,7 @@ class FingerprintService
             $this->user->setUuid($_COOKIE['user']);
         }
         
-        $user = $this->dbManager->getUser($this->user->getUuid());
+        $user = $this->userRepository->getUser($this->user->getUuid());
 
         if ($user) {
             $this->user->setType($user['type']);
@@ -57,10 +59,10 @@ class FingerprintService
 
     public function login($email, $password)
     {
-        $user = $this->dbManager->userWithEmailExists($email);
+        $user = $this->userRepository->userWithEmailExists($email);
 
         if ($user) {
-            $userData = $this->dbManager->getUserDataByCredentials($email, $password);
+            $userData = $this->userRepository->getUserDataByCredentials($email, $password);
 
             $this->clearUser();
             $this->setUser($userData);
@@ -87,7 +89,7 @@ class FingerprintService
 
     private function setGuest(): void
     {
-        $this->user->setUuid($this->dbManager->createGuest());
+        $this->user->setUuid($this->userRepository->createGuest());
             
         setcookie('user', $this->user->getUuid(), time() + (86400 * 90), '/');
         $_COOKIE['user'] = $this->user->getUuid();        

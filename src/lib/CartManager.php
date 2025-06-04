@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-require_once 'db.php';
+require_once "repository/CartRepository.php";
 require_once 'FingerprintService.php';
 
 class CartManager
 {
-    private Db $dbManager;
+    private CartRepository $cartRepository;
     private FingerprintService $fingerprintService;
     private ?string $cart;
     private static ?CartManager $instance = null;
@@ -28,7 +28,7 @@ class CartManager
         $this->fingerprintService = FingerprintService::getInstance();
 
         if (!isset($_SESSION['cart'])) {
-            $this->cart = $this->dbManager->getUserActiveCart($this->fingerprintService->getUser());
+            $this->cart = $this->cartRepository->getUserActiveCart($this->fingerprintService->getUser());
 
             if (empty($this->cart)) {
                 $this->cart = $this->createCart();
@@ -47,7 +47,7 @@ class CartManager
 
     public function createCart(): string
     {
-        $uuid = $this->dbManager->generateCart($this->fingerprintService->getUser());
+        $uuid = $this->cartRepository->generateCart($this->fingerprintService->getUser());
         
         return $uuid;
     }
@@ -55,7 +55,7 @@ class CartManager
     public function addToCart($productUuid)
     {
         try {
-            $this->dbManager->addToCart($this->getCart(), $productUuid);
+            $this->cartRepository->addToCart($this->getCart(), $productUuid);
         } catch (Exception $e) {
             unset($_SESSION['cart']);
             $this->createCart();
@@ -65,7 +65,7 @@ class CartManager
     public function removeFromCart($productUuid)
     {
         try {
-            $this->dbManager->removeFromCart($this->getCart(), $productUuid);
+            $this->cartRepository->removeFromCart($this->getCart(), $productUuid);
         } catch (Exception $e) {
             unset($_SESSION['cart']);
             $this->createCart();
@@ -74,12 +74,12 @@ class CartManager
 
     public function getSize()
     {
-        return $this->dbManager->getCartSize($this->cart);
+        return $this->cartRepository->getCartSize($this->cart);
     }
 
     public function getItems($userUuid)
     {
-        $items = $this->dbManager->getUserActiveCartWithItems($userUuid);
+        $items = $this->cartRepository->getUserActiveCartWithItems($userUuid);
         $quantified = $this->quantifyItems($items);
 
         return $quantified;
