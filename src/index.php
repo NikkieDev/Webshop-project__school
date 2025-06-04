@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 session_start();
 
-require_once 'lib/loadProducts.php';
+require_once 'lib/render/loadProducts.php';
 require_once 'lib/FingerprintService.php';
 require_once 'lib/SessionManager.php';
 

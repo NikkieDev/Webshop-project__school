@@ -23,3 +23,6 @@ product-detail
 to do for render:
 categories for products
 Nav everywhere
+
+To do for all inputs:
+Security, htmlspecialchars, don't trust user!!!

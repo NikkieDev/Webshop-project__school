@@ -34,6 +34,17 @@ CREATE TABLE IF NOT EXISTS CartItem(
     FOREIGN KEY (CartUuid) REFERENCES Cart(uuid) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS Order(
+    uuid VARCHAR(36) PRIMARY KEY,
+    CartUuid VARCHAR(36) NOT NULL,
+    UserUuid VARCHAR(36) NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `status` INT DEFAULT 0, -- 0 = processing, -1 = cancelled.
+    `address` VARCHAR(80) NOT NULL,
+    `zipcode` VARCHAR(7) NOT NULL,
+    `location` VARCHAR(32) NOT NULL
+);
+
 INSERT INTO Product(uuid, title, price) VALUES (
     UUID(),
     'Pear Watch 10',
