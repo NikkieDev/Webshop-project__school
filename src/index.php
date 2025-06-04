@@ -10,7 +10,7 @@ require_once 'lib/SessionManager.php';
 
 $fingerprint = FingerprintService::getInstance();
 $session = SessionManager::getInstance();
-?>  
+?>
 
 <html>
 <head>
@@ -22,7 +22,6 @@ $session = SessionManager::getInstance();
     <script src="/js/cart.js" defer></script>
 </head>
 <body>
-    <?php $session->dump() ?>
     <section class="header-wrapper">
         <?php if ($session->get('username')) { ?>
             <h3>Welcome, <?php echo $session->get('username') ?></h3>

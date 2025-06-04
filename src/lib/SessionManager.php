@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+require_once 'UserService.php';
 
 class SessionManager
 {
     private static ?SessionManager $instance = null;
+    private UserService $userService;
 
     public static function getInstance(): SessionManager
     {
@@ -14,20 +16,17 @@ class SessionManager
 
     private function __construct()
     {
-        if (!isset($_SESSION[$this->getUser()])) {
-            $_SESSION[$this->getUser()] = [];
-        }
-    }
+        $this->userService = new UserService();
 
-    public function getUser()
-    {
-        return $_COOKIE['user'];
+        if (!isset($_SESSION[$this->userService->getUser()])) {
+            $_SESSION[$this->userService->getUser()] = [];
+        }
     }
 
     public function get($name)
     {
         try {
-            return $_SESSION[$this->getUser()][$name];
+            return $_SESSION[$this->userService->getUser()][$name];
         } catch (Exception) {
             return null;
         }
@@ -35,16 +34,11 @@ class SessionManager
 
     public function set(string $name, $value)
     {
-        $_SESSION[$this->getUser()][$name] = $value;
+        $_SESSION[$this->userService->getUser()][$name] = $value;
     }
 
     public function unset(string $name)
     {
-        unset($_SESSION[$this->getUser()][$name]);
-    }
-    
-    public function dump()
-    {
-        var_dump($_SESSION);
+        unset($_SESSION[$this->userService->getUser()][$name]);
     }
 }

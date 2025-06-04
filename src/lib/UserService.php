@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once "repository/UserRepository.php";
+require_once "model/User.php";
 
 class UserService
 {
@@ -22,5 +23,36 @@ class UserService
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    public function getUser()
+    {
+        if (!isset($_COOKIE['user'])) {
+            $this->setGuest();
+        }
+
+        return $_COOKIE['user'];
+    }
+
+    public function setGuest(User &$user = null)
+    {
+        $newUserUuid = $this->userRepository->createGuest();
+
+        if ($user !== null) {
+            $user->setUuid($newUserUuid);
+        }
+
+        setcookie('user', $newUserUuid, time() + (86400 * 90), '/');
+        $_COOKIE['user'] = $newUserUuid;
+    }
+
+    public function setUser(User &$user, $userData)
+    {
+        $user->setType($userData['type']);
+        $user->setUsername($userData['username']);
+        $user->setUuid($userData['uuid']);
+
+        setcookie('user', $user->getUuid(), time() + (86400 * 90), '/');
+        $_COOKIE['user'] = $user->getUuid();
     }
 }

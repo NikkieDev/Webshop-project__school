@@ -36,6 +36,7 @@ abstract class BaseRepository
 
     protected function generateUUID(): string
     {
+        $this->getConnection();
         return $this->conn->query("SELECT UUID()")->fetchColumn();
     }
 }

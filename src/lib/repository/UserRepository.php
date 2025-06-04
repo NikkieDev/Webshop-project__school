@@ -84,4 +84,10 @@ final class UserRepository extends BaseRepository
 
         return $guestUuid;
     }
+
+    public function deleteUser(string $uuid): void
+    {
+        $stmt = $this->getConnection()->prepare('DELETE FROM User WHERE uuid = :uuid');
+        $stmt->execute([':uuid' => $uuid]);
+    }
 }

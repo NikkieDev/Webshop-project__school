@@ -30,7 +30,6 @@ class CartManager
         $this->cartRepository = new CartRepository();
         $this->session = SessionManager::getInstance();
 
-        echo "Cart received for user  " . $this->fingerprintService->getUser();
         $this->cart = $this->cartRepository->getUserActiveCart($this->fingerprintService->getUser());
         $this->session->set('cart', $this->cart);
     }
