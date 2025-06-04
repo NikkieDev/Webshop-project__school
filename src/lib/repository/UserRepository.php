@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once "BaseRepository.php";
+require_once '../model/UserType.php';
 
 final class UserRepository extends BaseRepository
 {
