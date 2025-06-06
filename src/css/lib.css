@@ -23,13 +23,20 @@ section {
     margin: 0 auto;
 }
 
-button {
+button, .btn {
     padding: 6px 12px;
     border-radius: 6px;
     border: 1px solid rgba(0,0,0,0.1);
     background-color: black;
     color: white;
     cursor: pointer;
+}
+
+.btn {
+    display: flex;
+    text-decoration: none;
+    max-width: fit-content;
+    align-self: center
 }
 
 nav {

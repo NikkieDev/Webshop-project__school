@@ -1,0 +1,14 @@
+.error-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.error-image {
+    width: 480px;
+    height: 480px;
+}
+
+.error-message {
+    font-weight: 800;
+    font-size: 32px;
+}

@@ -17,7 +17,7 @@ if ($fingerprint->isGuest()) {
 }
 
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
-    $orderId = $this->//create order repository && handler
+    // $orderId = $this->//create order repository && handler
     header('Location: gelukt.php?OrderId=' . $orderId);
 }
 

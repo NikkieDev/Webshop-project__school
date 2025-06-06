@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . "/../../lib/Util.php";
+
 abstract class BaseRepository
 {
     private string $serv = '127.0.0.1';
@@ -16,7 +18,10 @@ abstract class BaseRepository
         try {
             $this->conn = new PDO("mysql:host=" . $this->serv . ";dbname=" . $this->dbName, $this->user, $this->pass);
         } catch (PDOException $e) {
-            die("Unable to log into database, " . $e->getMessage());
+            $message = "Unable to log into database, " . $e->getMessage();
+            
+            error_log($message);
+            Util::renderErrorPage(500, $message);
         }
     }
 

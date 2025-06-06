@@ -17,9 +17,7 @@ if (!$fingerprint->isGuest()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $util = new Util();
-
-    $util->verifyPropertyExists($_POST, ["username", "password", "email"]);
+    Util::verifyPropertyExists($_POST, ["username", "password", "email"]);
 
     try {
         $userService->transformGuestToUser($_POST['username'], $_POST['password'], $_POST['email'], $fingerprint->getUser());

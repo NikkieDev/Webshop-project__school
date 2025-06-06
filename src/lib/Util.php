@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class Util
 {
-    public function verifyPropertyExists($haystack, $needleArray)
+    public static function verifyPropertyExists($haystack, $needleArray)
     {
         foreach ($needleArray as $needle) {
             if ($haystack[$needle]) {
@@ -13,5 +13,11 @@ class Util
 
             throw new Exception("Property " . $needle . " is missing");
         }
+    }
+
+    public static function renderErrorPage(int $statusCode, string $message)
+    {
+        header("Location: /error/" . (string) $statusCode . ".php");
+        die($message);
     }
 }
