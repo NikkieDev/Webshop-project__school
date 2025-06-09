@@ -99,3 +99,12 @@ input {
     flex-direction: column;
     margin: auto;
 }
+
+.center {
+    display: flex;
+    align-items: center;
+}
+
+.col {
+    flex-direction: column;
+}

@@ -26,12 +26,23 @@ if (!$orderExists) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bestelling gelukt!</title>
     <link rel="stylesheet" href="/css/lib.css">
+
+    <style>
+        h2 {
+            font-size: 32px;
+        }
+        .success-bestelnummer {
+            font-size: 12px;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+        }
+    </style>
 </head>
 <body>
-    <section class="success-wrapper">
+    <section class="success-wrapper center col">
         <h2>Bedankt voor uw bestelling!</h2>
-        <span>Bestel-nummer #<?php echo $orderId ?></span>
-        <a href="/">Terug</a>
+        <span class="success-bestelnummer">#<?php echo $orderId ?></span>
+        <a href="/" class="btn">Terug</a>
     </section>
 </body>
 </html>
