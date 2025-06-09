@@ -16,7 +16,7 @@ class SessionManager
 
     private function __construct()
     {
-        $this->userService = new UserService();
+        $this->userService = UserService::getInstance();
 
         if (!isset($_SESSION[$this->userService->getUser()])) {
             $_SESSION[$this->userService->getUser()] = [];

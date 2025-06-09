@@ -77,6 +77,12 @@ class CartManager
         return $quantified;
     }
 
+    public function closeCart()
+    {
+        $this->cartRepository->closeCart($this->getCart());
+        $this->resetCart();
+    }
+
     private function resetCart()
     {
         $this->session->unset('cart');

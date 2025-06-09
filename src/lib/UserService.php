@@ -7,9 +7,16 @@ require_once "model/User.php";
 
 class UserService
 {
+    private static ?UserService $instance = null;
+
     private UserRepository $userRepository;
 
-    public function __construct()
+    public static function getInstance(): UserService
+    {
+        return self::$instance ??= new UserService();
+    }
+
+    private function __construct()
     {
         $this->userRepository = new UserRepository();
     }

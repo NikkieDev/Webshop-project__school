@@ -18,6 +18,7 @@ class Util
     public static function renderErrorPage(int $statusCode, string $message)
     {
         header("Location: /error/" . (string) $statusCode . ".php");
+        error_log($message);
         die($message);
     }
 }

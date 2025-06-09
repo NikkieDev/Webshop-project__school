@@ -6,9 +6,12 @@ session_start();
 
 require_once 'lib/FingerprintService.php';
 require_once 'lib/CartManager.php';
+require_once 'lib/OrderService.php';
+require_once 'lib/Util.php';
 
 $fingerprint = FingerprintService::getInstance();
 $cartManager = CartManager::getInstance();
+$orderService = OrderService::getInstance();
 
 if ($fingerprint->isGuest()) {
     header('Location: account-aanmaken.php?referrer=afrekenen.php');
@@ -17,8 +20,19 @@ if ($fingerprint->isGuest()) {
 }
 
 if ('POST' === $_SERVER['REQUEST_METHOD']) {
-    // $orderId = $this->//create order repository && handler
-    header('Location: gelukt.php?OrderId=' . $orderId);
+    $orderProps = new CreateOrderProps(
+        $fingerprint->getUser(),
+        $_POST['streetWithNumber'],
+        $_POST['zipcode'],
+        $_POST['location']
+    );
+
+    try {
+        $orderId = $orderService->createOrderFromCart($orderProps);
+        header('Location: gelukt.php?orderId=' . $orderId);
+    } catch (Exception $e) {
+        Util::renderErrorPage(500, 'Unable to verify order, ' . $e->getMessage());
+    }
 }
 
 ?>

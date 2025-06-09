@@ -109,4 +109,10 @@ final class CartRepository extends BaseRepository
 
         return $uuid;
     }
+
+    public function closeCart($cartUuid)
+    {
+        $stmt = $this->getConnection()->prepare("UPDATE Cart SET `status` = 1 WHERE uuid = :cartUuid");
+        $stmt->execute([':cartUuid' => $cartUuid]);
+    }
 }

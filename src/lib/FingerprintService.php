@@ -31,7 +31,7 @@ class FingerprintService
 
         $this->session = SessionManager::getInstance();
         $this->userRepository = new UserRepository();
-        $this->userService = new UserService();
+        $this->userService = UserService::getInstance();
         $this->user = new User();
         
         if (empty($_COOKIE['user'])) {
