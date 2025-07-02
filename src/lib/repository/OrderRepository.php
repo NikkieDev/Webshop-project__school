@@ -19,7 +19,7 @@ final class OrderRepository extends BaseRepository
     {
         $orderUuid = $this->generateUUID();
 
-        $stmt = $this->getConnection()->prepare("INSERT INTO `Order` (uuid, CartUuid, UserUuid, `address`, `zipcode`, `location`) VALUES (:identifier, :cartUuid, :userUuid, :address, :zipcode, :location)");
+        $stmt = $this->getConnection()->prepare("INSERT INTO `Order` (uuid, CartUuid, UserUuid, `address`, `zipcode`, `location`, price, vat) VALUES (:identifier, :cartUuid, :userUuid, :address, :zipcode, :location, :price, :vat)");
         $stmt->execute([
             ':identifier' => $orderUuid,
             ':cartUuid' => $cartUuid,
@@ -27,6 +27,8 @@ final class OrderRepository extends BaseRepository
             ':address' => $props->getStreetWithNumber(),
             ':zipcode' => $props->getZipCode(),
             ':location' => $props->getLocation(),
+            ':price' => $props->getPrice(),
+            ':vat' => $props->getVat(),
         ]);
 
         return $orderUuid;
@@ -39,5 +41,23 @@ final class OrderRepository extends BaseRepository
 
         $result = $stmt->fetch();
         return (bool) $result;
+    }
+
+
+    public function getUserMostRecentOrders(string $userUuid): array
+    {
+        $stmt = $this->getConnection()->prepare("
+            SELECT `o.status`, `o.price`, `o.vat`, `o.createdAt` FROM `Order`
+            WHERE o.UserUuid = :userId
+        "); // get item count too
+
+        $stmt->execute([':userId' => $userUuid]);
+        $results = $stmt->fetchAll();
+
+        if (!$results) {
+            return [];
+        }
+
+        return $results;
     }
 }

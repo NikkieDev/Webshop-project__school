@@ -22,7 +22,6 @@ class CartManager
 
         return self::$instance;
     }
-
     
     private function __construct()
     {
@@ -69,12 +68,25 @@ class CartManager
         return $this->cartRepository->getCartSize($this->cart);
     }
 
-    public function getItems($userUuid)
+    public function getItems()
     {
-        $items = $this->cartRepository->getUserActiveCartWithItems($userUuid);
+        $items = $this->cartRepository->getUserActiveCartWithItems($this->fingerprintService->getUser());
         $quantified = $this->quantifyItems($items);
 
         return $quantified;
+    }
+
+    public function getCartValue(): float
+    {
+        $value = 0.00;
+
+        $items = $this->cartRepository->getUserActiveCartWithItems($this->fingerprintService->getUser());
+
+        foreach ($items as $item) {
+            $value += (float) $item['ProductPrice'];
+        }
+
+        return $value;
     }
 
     public function closeCart()

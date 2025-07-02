@@ -40,4 +40,12 @@ class OrderService
     {
         return $this->orderRepository->doesOrderExist($orderUuid);
     }
+
+    public function getUserMostRecentOrders(): mixed
+    {
+        $user = $this->userService->getUser();
+        $orders = $this->orderRepository->getUserMostRecentOrders($user);
+
+        return $orders;
+    }
 }

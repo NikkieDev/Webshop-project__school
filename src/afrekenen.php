@@ -24,7 +24,8 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
         $fingerprint->getUser(),
         $_POST['streetWithNumber'],
         $_POST['zipcode'],
-        $_POST['location']
+        $_POST['location'],
+        $cartManager->getCartValue(),
     );
 
     try {
