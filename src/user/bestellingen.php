@@ -25,19 +25,7 @@ $orders = $orderService->getUserMostRecentOrders();
     <title>Bestellingen</title>
 </head>
 <body>
-    <section class="header-wrapper">
-        <?php if ($session->get('username')) { ?>
-            <h3>Welcome, <?= $session->get('username') ?></h3>
-        <?php } ?>
-        <nav>
-            <div class="nav-item--wrapper">
-                <a class="nav-item" href="/">Home</a>
-                <a class="nav-item" href="/winkelwagen.php?referrer=index.php">Winkelwagen</a>
-                <a class="nav-item" href="/user/bestellingen.php?referrer=index.php">Bestellingen</a>
-                <a class="nav-item" href="/user/instellingen.php?referrer=index.php">Instellingen</a>
-            </div>
-        </nav>
-    </section>
+    <?php include __DIR__ ."/../partials/header.php" ?>
     <section class="bestellingen-wrapper">
         <?php foreach ($orders as $order) { ?>
             <?php $orderId = $order['OrderId']; ?>

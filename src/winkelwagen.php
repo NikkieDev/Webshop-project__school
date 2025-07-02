@@ -24,21 +24,8 @@ $referrer = $_GET['referrer'];
     <script src="/js/cart.js" defer></script>
 </head>
 <body>
-    <section class="header-wrapper">
-        <?php if ($session->get('username')) { ?>
-            <h3>Welcome, <?= $session->get('username') ?></h3>
-        <?php } ?>
-        <nav>
-            <div class="nav-item--wrapper">
-                <a class="nav-item" href="/">Home</a>
-                <a class="nav-item" href="/winkelwagen.php?referrer=index.php">Winkelwagen</a>
-                <?php if (!$fingerprint->isGuest()) { ?>
-                    <a class="nav-item" href="user/bestellingen.php?referrer=index.php">Bestellingen</a>
-                    <a class="nav-item" href="user/instellingen.php?referrer=index.php">Instellingen</a>
-                <?php } ?>
-            </div>
-        </nav>
-    </section>
+    <?php include "partials/header.php" ?>
+
     <section class="winkelwagen-wrapper">
         <?php if ($cartManager->getSize() === 0) { ?>
             <div class="flash-card flash-warning"><span class="flash-content">Uw winkelwagen is leeg!</span></div>
