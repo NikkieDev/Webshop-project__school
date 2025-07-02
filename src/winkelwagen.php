@@ -5,9 +5,11 @@ session_start();
 
 require_once 'lib/FingerprintService.php';
 require_once "lib/CartManager.php";
+require_once "lib/SessionManager.php";
 
 $fingerprint = FingerprintService::getInstance();
 $cartManager = CartManager::getInstance();
+$session = SessionManager::getInstance();
 $referrer = $_GET['referrer'];
 
 ?>
@@ -22,9 +24,20 @@ $referrer = $_GET['referrer'];
     <script src="/js/cart.js" defer></script>
 </head>
 <body>
-    <a href="<?php echo $referrer ?>">Terug</a>
-    
-    <section>
+    <section class="header-wrapper">
+        <?php if ($session->get('username')) { ?>
+            <h3>Welcome, <?php echo $session->get('username') ?></h3>
+        <?php } ?>
+        <nav>
+            <div class="nav-item--wrapper">
+                <a class="nav-item" href="/">Home</a>
+                <a class="nav-item" href="/winkelwagen.php?referrer=index.php">Winkelwagen</a>
+                <a class="nav-item" href="/user/bestellingen.php?referrer=index.php">Bestellingen</a>
+                <a class="nav-item" href="/user/instellingen.php?referrer=index.php">Instellingen</a>
+            </div>
+        </nav>
+    </section>
+    <section class="winkelwagen-wrapper">
         <?php if ($cartManager->getSize() === 0) { ?>
             <div class="flash-card flash-warning"><span class="flash-content">Uw winkelwagen is leeg!</span></div>
         <?php } else { ?>
@@ -32,7 +45,7 @@ $referrer = $_GET['referrer'];
                 <h3>Deze <?php echo $cartManager->getSize() ?> producten zitten in uw winkelwagen</h3>
 
                 <div class="cart-items--wrapper">
-                    <?php foreach ($cartManager->getItems($fingerprint->getUser()) as $product) {?>
+                    <?php foreach ($cartManager->getItems() as $product) {?>
                         <?php $productUuid = $product['ProductId']; ?>
 
                         <div class="cart-item--wrapper">

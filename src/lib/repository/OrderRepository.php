@@ -47,8 +47,10 @@ final class OrderRepository extends BaseRepository
     public function getUserMostRecentOrders(string $userUuid): array
     {
         $stmt = $this->getConnection()->prepare("
-            SELECT `o.status`, `o.price`, `o.vat`, `o.createdAt` FROM `Order`
+            SELECT o.status, o.price, o.vat, o.createdAt, COUNT(ci.uuid) AS itemCount FROM `Order` AS o
+            INNER JOIN CartItem AS ci ON ci.CartUuid = o.CartUuid
             WHERE o.UserUuid = :userId
+            GROUP BY o.uuid
         "); // get item count too
 
         $stmt->execute([':userId' => $userUuid]);
