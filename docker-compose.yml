@@ -1,5 +1,6 @@
 services:
   db:
+    container_name: 'db'
     image: mysql:latest
     restart: unless-stopped
     environment:
@@ -7,5 +8,21 @@ services:
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
       - '3306:3306'
+    networks:
+      - app-net
     volumes:
       - ./src/config/init.sql:/docker-entrypoint-initdb.d/init.sql
+  application:
+    build: .
+    container_name: 'application'
+    restart: unless-stopped
+    networks:
+      - app-net
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+
+networks:
+  app-net:
+    external: false

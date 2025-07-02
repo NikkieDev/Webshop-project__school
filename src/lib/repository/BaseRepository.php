@@ -6,7 +6,7 @@ require_once __DIR__ . "/../../lib/Util.php";
 
 abstract class BaseRepository
 {
-    private string $serv = '127.0.0.1';
+    private string $serv = 'db';
     private string $dbName = 'shop';
     private string $user = 'root';
     private string $pass = 'password';
