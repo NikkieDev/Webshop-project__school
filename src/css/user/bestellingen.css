@@ -1,0 +1,28 @@
+.bestellingen-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0 auto;
+    width: 1280px;
+}
+
+.bestelling-wrapper {
+    background-color: white;
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 4px 4px 4px 1px rgba(0,0,0,.1);
+}
+
+.bestelling {
+    display: flex;
+    flex-direction: row;
+}
+
+.bestel-acties--wrapper {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 20%;
+    gap: 6px;
+}

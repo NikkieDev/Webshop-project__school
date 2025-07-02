@@ -53,4 +53,23 @@ class OrderService
     {
         $this->orderRepository->cancelOrder($orderUuid);
     }
+    
+    public function reOrder(string $orderUuid)
+    {
+        $existingOrder = $this->orderRepository->findById($orderUuid);
+
+        if (0 == count($existingOrder)) {
+            throw new Exception("Bestelling bestaat niet");
+        }
+
+        $props = new CreateOrderProps(
+            $existingOrder['UserUuid'],
+            $existingOrder['address'],
+            $existingOrder['zipcode'],
+            $existingOrder['location'],
+            (float) $existingOrder['price'],
+        );
+
+        $this->orderRepository->createOrder($existingOrder['CartUuid'], $props);
+    }
 }

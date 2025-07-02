@@ -31,3 +31,4 @@ Security, htmlspecialchars, don't trust user!!!
 
 could have:
 order Ajax folder into subdirectories to clean the URL (/order/cancel.php instead of cancelOrder.php)
+rebuild ajax js functions into a more organized ajax.js with possible HTTP Client

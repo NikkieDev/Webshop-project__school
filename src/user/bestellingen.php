@@ -54,7 +54,7 @@ $orders = $orderService->getUserMostRecentOrders();
                     <div class="bestel-acties--wrapper">
                         <button onclick="reOrder('<?= $orderId ?>')">Opnieuw bestellen</button>
                         <button onclick="cancelOrder('<?= $orderId ?>')"
-                            <?php if (0 <= $order['OrderStatus']) { ?>
+                            <?php if (-1 === $order['OrderStatus']) { ?>
                                 disabled
                                 title="Deze bestelling is al geannuleerd"
                             <?php } else { ?>

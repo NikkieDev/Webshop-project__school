@@ -32,8 +32,10 @@ $referrer = $_GET['referrer'];
             <div class="nav-item--wrapper">
                 <a class="nav-item" href="/">Home</a>
                 <a class="nav-item" href="/winkelwagen.php?referrer=index.php">Winkelwagen</a>
-                <a class="nav-item" href="/user/bestellingen.php?referrer=index.php">Bestellingen</a>
-                <a class="nav-item" href="/user/instellingen.php?referrer=index.php">Instellingen</a>
+                <?php if (!$fingerprint->isGuest()) { ?>
+                    <a class="nav-item" href="user/bestellingen.php?referrer=index.php">Bestellingen</a>
+                    <a class="nav-item" href="user/instellingen.php?referrer=index.php">Instellingen</a>
+                <?php } ?>
             </div>
         </nav>
     </section>

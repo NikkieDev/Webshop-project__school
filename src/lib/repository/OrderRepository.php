@@ -33,6 +33,22 @@ final class OrderRepository extends BaseRepository
         return $orderUuid;
     }
 
+    public function findById(string $uuid): array
+    {
+        $stmt = $this->getConnection()->prepare("
+            SELECT * FROM `Order` WHERE uuid = :uuid LIMIT 1
+        ");
+
+        $stmt->execute([':uuid' => $uuid]);
+        $order = $stmt->fetch();
+
+        if (!isset($order)) {
+            return [];
+        }
+
+        return $order;
+    }
+    
     public function doesOrderExist($orderUuid): bool
     {
         $stmt = $this->getConnection()->prepare("SELECT 1 FROM `Order` WHERE uuid = :orderUuid");
@@ -71,4 +87,5 @@ final class OrderRepository extends BaseRepository
 
         $stmt->execute([':uuid' => $orderUuid]);
     }
+
 }
