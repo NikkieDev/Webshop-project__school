@@ -24,7 +24,7 @@ $session = SessionManager::getInstance();
 <body>
     <section class="header-wrapper">
         <?php if ($session->get('username')) { ?>
-            <h3>Welcome, <?php echo $session->get('username') ?></h3>
+            <h3>Welcome, <?= $session->get('username') ?></h3>
         <?php } ?>
         <nav>
             <div class="nav-item--wrapper">
@@ -51,9 +51,9 @@ $session = SessionManager::getInstance();
                 <div class="product-wrapper">
                     <div class="product">
                         <?php $productUuid = $product['uuid']; ?>
-                        <h3 class="product-name"><?php echo $product['title']; ?></h3>
-                        <span class="product-price`">&euro; <?php echo $product['price']; ?></span>
-                        <button onclick="addToCart('<?php echo $productUuid ?>')">Toevoegen</button>
+                        <h3 class="product-name"><?= $product['title']; ?></h3>
+                        <span class="product-price`">&euro; <?= $product['price']; ?></span>
+                        <button onclick="addToCart('<?= $productUuid ?>')">Toevoegen</button>
                     </div>
                 </div>
             <?php } ?>

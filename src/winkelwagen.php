@@ -16,7 +16,7 @@ $referrer = $_GET['referrer'];
 
 <html>
 <head>
-    <title><?php echo $cartManager->getSize() ?> producten in winkelwagen</title>
+    <title><?= $cartManager->getSize() ?> producten in winkelwagen</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/lib.css">
@@ -26,7 +26,7 @@ $referrer = $_GET['referrer'];
 <body>
     <section class="header-wrapper">
         <?php if ($session->get('username')) { ?>
-            <h3>Welcome, <?php echo $session->get('username') ?></h3>
+            <h3>Welcome, <?= $session->get('username') ?></h3>
         <?php } ?>
         <nav>
             <div class="nav-item--wrapper">
@@ -42,7 +42,7 @@ $referrer = $_GET['referrer'];
             <div class="flash-card flash-warning"><span class="flash-content">Uw winkelwagen is leeg!</span></div>
         <?php } else { ?>
             <div class="cart-content--wrapper">
-                <h3>Deze <?php echo $cartManager->getSize() ?> producten zitten in uw winkelwagen</h3>
+                <h3>Deze <?= $cartManager->getSize() ?> producten zitten in uw winkelwagen</h3>
 
                 <div class="cart-items--wrapper">
                     <?php foreach ($cartManager->getItems() as $product) {?>
@@ -51,16 +51,16 @@ $referrer = $_GET['referrer'];
                         <div class="cart-item--wrapper">
                             <div class="cart-item">
                                 <div class="cart-item__meta--wrapper">
-                                    <h4><?php echo $product['ProductTitle']; ?></h4>
-                                    <p>&euro; <?php echo $product['ProductPrice']; ?></p>
+                                    <h4><?= $product['ProductTitle']; ?></h4>
+                                    <p>&euro; <?= $product['ProductPrice']; ?></p>
                                 </div>
                                 <div class="cart-item__dynamic--wrapper">
                                     <div class="cart-item__amount--wrapper">
-                                        <p>Aantal: <span product-uuid="<?php echo $productUuid ?>" class="cart-item__amount"><?php echo $product['quantity'] ?></span></p>
+                                        <p>Aantal: <span product-uuid="<?= $productUuid ?>" class="cart-item__amount"><?= $product['quantity'] ?></span></p>
                                     </div>
                                     <div class="cart-item__interaction--wrapper">
-                                        <button onclick="decreaseCartItemCount('<?php echo $productUuid ?>', this)">-</button>
-                                        <button onclick="increaseCartItemCount('<?php echo $productUuid ?>')">+</button>
+                                        <button onclick="decreaseCartItemCount('<?= $productUuid ?>', this)">-</button>
+                                        <button onclick="increaseCartItemCount('<?= $productUuid ?>')">+</button>
                                     </div>
                                 </div>
                             </div>

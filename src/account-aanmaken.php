@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (isset($_GET['flash'])) { ?>
         <section>
             <div class="flash-card flash-warning">
-                <span class="flash-content"><?php echo $_GET['flash']; ?></span>
+                <span class="flash-content"><?= $_GET['flash']; ?></span>
             </div>
         </section>
     <?php } ?>

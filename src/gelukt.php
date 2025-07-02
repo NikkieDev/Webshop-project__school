@@ -41,7 +41,7 @@ if (!$orderExists) {
 <body>
     <section class="success-wrapper center col">
         <h2>Bedankt voor uw bestelling!</h2>
-        <span class="success-bestelnummer">#<?php echo $orderId ?></span>
+        <span class="success-bestelnummer">#<?= $orderId ?></span>
         <a href="/" class="btn">Terug</a>
     </section>
 </body>

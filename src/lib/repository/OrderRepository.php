@@ -19,7 +19,7 @@ final class OrderRepository extends BaseRepository
     {
         $orderUuid = $this->generateUUID();
 
-        $stmt = $this->getConnection()->prepare("INSERT INTO `Order` (uuid, CartUuid, UserUuid, `address`, `zipcode`, `location`, price, vat) VALUES (:identifier, :cartUuid, :userUuid, :address, :zipcode, :location, :price, :vat)");
+        $stmt = $this->getConnection()->prepare("INSERT INTO `Order` (uuid, CartUuid, UserUuid, `address`, `zipcode`, `location`, price) VALUES (:identifier, :cartUuid, :userUuid, :address, :zipcode, :location, :price)");
         $stmt->execute([
             ':identifier' => $orderUuid,
             ':cartUuid' => $cartUuid,
@@ -28,7 +28,6 @@ final class OrderRepository extends BaseRepository
             ':zipcode' => $props->getZipCode(),
             ':location' => $props->getLocation(),
             ':price' => $props->getPrice(),
-            ':vat' => $props->getVat(),
         ]);
 
         return $orderUuid;
@@ -47,11 +46,12 @@ final class OrderRepository extends BaseRepository
     public function getUserMostRecentOrders(string $userUuid): array
     {
         $stmt = $this->getConnection()->prepare("
-            SELECT o.status, o.price, o.vat, o.createdAt, COUNT(ci.uuid) AS itemCount FROM `Order` AS o
+            SELECT o.uuid AS OrderId, o.status AS OrderStatus, o.price AS OrderTotal, o.createdAt AS OrderDate, COUNT(ci.uuid) AS itemCount
+            FROM `Order` AS o
             INNER JOIN CartItem AS ci ON ci.CartUuid = o.CartUuid
             WHERE o.UserUuid = :userId
             GROUP BY o.uuid
-        "); // get item count too
+        ");
 
         $stmt->execute([':userId' => $userUuid]);
         $results = $stmt->fetchAll();
@@ -61,5 +61,14 @@ final class OrderRepository extends BaseRepository
         }
 
         return $results;
+    }
+
+    public function cancelOrder(string $orderUuid): void
+    {
+        $stmt = $this->getConnection()->prepare('
+            UPDATE `Order` SET `status` = -1 WHERE uuid = :uuid
+        ');
+
+        $stmt->execute([':uuid' => $orderUuid]);
     }
 }

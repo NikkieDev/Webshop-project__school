@@ -44,7 +44,6 @@ CREATE TABLE IF NOT EXISTS `Order`(
     `zipcode` VARCHAR(7) NOT NULL,
     `location` VARCHAR(32) NOT NULL,
     `price` DECIMAL(8,2) NOT NULL DEFAULT 0.00,
-    `vat` DECIMAL(6,2) NOT NULL DEFAULT 0.00,
     FOREIGN KEY (CartUuid) REFERENCES Cart(uuid),
     FOREIGN KEY (UserUuid) REFERENCES User(uuid)
 );
