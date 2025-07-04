@@ -27,6 +27,16 @@ $orders = $orderService->getUserMostRecentOrders();
 <body>
     <?php include __DIR__ ."/../partials/header.php" ?>
     <section class="bestellingen-wrapper">
+        <?php if (0 === count($orders)) { ?>
+            <div class="flash-wrapper">
+                <div class="flash-card flash-warning">
+                    <span class="flash-content">
+                        U heeft geen bestellingen
+                    </span>
+                </div>
+            </div>
+        <?php } else ?>
+
         <?php foreach ($orders as $order) { ?>
             <?php $orderId = $order['OrderId']; ?>
             <div class="bestelling-wrapper">

@@ -28,7 +28,7 @@ $referrer = $_GET['referrer'];
 
     <section class="winkelwagen-wrapper">
         <?php if ($cartManager->getSize() === 0) { ?>
-            <div class="flash-card flash-warning"><span class="flash-content">Uw winkelwagen is leeg!</span></div>
+            <div class="flash-card flash-warning"><span class="flash-content">Uw winkelwagen is leeg</span></div>
         <?php } else { ?>
             <div class="cart-content--wrapper">
                 <h3>Deze <?= $cartManager->getSize() ?> producten zitten in uw winkelwagen</h3>

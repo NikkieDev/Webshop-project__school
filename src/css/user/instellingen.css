@@ -1,0 +1,35 @@
+.instellingen-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.instellingen-forms--wrapper {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 12px;
+    width: 1280px;
+}
+
+.form-wrapper {
+    background-color: white;
+    padding: 24px;
+    height: 256px;
+    width: 512px;
+    margin: unset;
+    box-shadow: 4px 4px 4px 1px rgba(0,0,0,.1);
+
+    &>button[type='submit'] {
+        margin-top: auto;
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+.input-wrapper {
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+    justify-content: space-between;
+}

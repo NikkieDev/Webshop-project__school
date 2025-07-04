@@ -1,3 +1,3 @@
 <?php
 
-// Product detail pagina
+// $productData = ProductRepository->

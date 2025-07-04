@@ -7,11 +7,6 @@ require_once __DIR__ . "/../lib/FingerprintService.php";
 require_once __DIR__ . "/../lib/SessionManager.php";
 require_once __DIR__ . "/../lib/UserService.php";
 
-$fingerprint = FingerprintService::getInstance();
-$user = UserService::getInstance();
-$session = SessionManager::getInstance();
-
-
 function requiredBodyExists(array $body): bool
 {
     foreach ($body as $field) { 
@@ -23,9 +18,9 @@ function requiredBodyExists(array $body): bool
     return true;
 }
 
-function resetPassword(FingerprintService $fp, UserService $user): void
+function resetPassword(): void
 {
-    $passwordVerified = $fp->verifyPassword($_POST['old-password']);
+    $passwordVerified = FingerprintService::getInstance()->verifyPassword($_POST['old-password']);
         
     if (!$passwordVerified) {
         header("Location: instellingen.php?error=Uw wachtwoord klopt niet.");
@@ -35,20 +30,20 @@ function resetPassword(FingerprintService $fp, UserService $user): void
         exit;
     }
 
-    $user->setPassword($_POST['new-password']);
+    UserService::getInstance()->setPassword($_POST['new-password']);
     return;
 }
 
-function resetMail(FingerprintService $fp, UserService $user)
+function resetMail()
 {
-    $passwordVerified = $fp->verifyPassword($_POST['password']);
+    $passwordVerified = FingerprintService::getInstance()->verifyPassword($_POST['password']);
 
     if (!$passwordVerified) {
         header("Location: instellingen.php?error=Uw wachtwoord klopt niet.");
         exit;
     }
 
-    $user->setMail($_POST['new-mail']);
+    UserService::getInstance()->setMail($_POST['new-mail']);
     return;
 }
 
@@ -62,11 +57,11 @@ if ("POST" === $_SERVER["REQUEST_METHOD"]) {
     $requestType = $_POST["request-type"];
 
     if ('password-reset' === $requestType && requiredBodyExists(['old-password', 'new-password', 'new-password-confirm'])) {
-        resetPassword($fingerprint, $user);
+        resetPassword();
         header("Location: instellingen.php?msg=Uw wachtwoord is aangepast");
         exit;
     } else if ('mail-reset' === $requestType && requiredBodyExists(['password', 'new-mail'])) {
-        resetMail($fingerprint, $user);
+        resetMail();
         header("Location: instellingen.php?msg=Uw e-mail is aangepast");
         exit;
     }
@@ -80,47 +75,61 @@ if ("POST" === $_SERVER["REQUEST_METHOD"]) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/lib.css">
+    <link rel="stylesheet" href="/css/user/instellingen.css">
     <title>Instellingen</title>
 </head>
 <body>
     <?php include __DIR__ ."/../partials/header.php" ?>
+
     <section class="instellingen-wrapper">
-        <?php if (isset($_GET['error'])) { ?>
-            <div class="flash-card flash-warning"><span class="flash-content"><?= $_GET['error']; ?></span></div>
-        <?php } else if (isset($_GET['msg'])) { ?>
-            <div class="flash-card flash-success"><span class="flash-content"><?= $_GET['msg']; ?></span></div>
-        <?php } ?>
-        <form method="POST" class="password-form">
-            <input type="hidden" name="request-type" value="password-reset">
-            <div class="input-wrapper">
-                <label for="old-password">Oud wachtwoord</label>
-                <input type="password" name="old-password" required>
-            </div>
-            <div class="input-wrapper">
-                <label for="new-password">Nieuw wachtwoord</label>
-                <input type="password" name="new-password" required>
-            </div>
-            <div class="input-wrapper">
-                <label for="new-password-confirm">Nieuw wachtwoord herhalen</label>
-                <input type="password" name="new-password-confirm" required>
+        <div class="flash-wrapper">
+            <?php if (isset($_GET['error'])) { ?>
+                <div class="flash-card flash-warning"><span class="flash-content"><?= $_GET['error']; ?></span></div>
+            <?php } else if (isset($_GET['msg'])) { ?>
+                <div class="flash-card flash-success"><span class="flash-content"><?= $_GET['msg']; ?></span></div>
+            <?php } ?>
+        </div>
+
+
+        <div class="instellingen-forms--wrapper">
+            <div class="password-form--wrapper">
+                <h3>Wachtwoord aanpassen</h3>
+                <form method="POST" class="password-form form-wrapper">
+                    <input type="hidden" name="request-type" value="password-reset">
+                    <div class="input-wrapper">
+                        <label for="old-password">Oud wachtwoord</label>
+                        <input type="password" name="old-password" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="new-password">Nieuw wachtwoord</label>
+                        <input type="password" name="new-password" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="new-password-confirm">Nieuw wachtwoord herhalen</label>
+                        <input type="password" name="new-password-confirm" required>
+                    </div>
+
+                    <button type="submit">Vervangen</button>
+                </form>
             </div>
 
-            <button type="submit">Vervangen</button>
-        </form>
-
-        <form method="POST" class="mail-form">
-            <input type="hidden" name="request-type" value="mail-reset">
-            <div class="input-wrapper">
-                <label for="password">Wachtwoord</label>
-                <input type="password" name="password" required>
+            <div class="mail-form--wrapper">
+                <h3>E-mail aanpassen</h3>
+                <form method="POST" class="mail-form form-wrapper">
+                    <input type="hidden" name="request-type" value="mail-reset">
+                    <div class="input-wrapper">
+                        <label for="password">Wachtwoord</label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="new-mail">Nieuw e-mail adres</label>
+                        <input type="email" name="new-mail" required>
+                    </div>
+    
+                    <button type="submit">Vervangen</button>
+                </form>
             </div>
-            <div class="input-wrapper">
-                <label for="new-mail">Nieuw e-mail adres</label>
-                <input type="email" name="new-mail" required>
-            </div>
-
-            <button type="submit">Vervangen</button>
-        </form>
+        </div>
     </section>
 </body>
 </html>

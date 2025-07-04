@@ -10,21 +10,18 @@ Currently:
 * Reactive cart item management
 * Log in
 * Back track to link after login/signup (Untested)
-
-To do for user:
-user make order
-user cancel order
-user change password
-user change email
+* Order placing
+* Order re-placing
+* Order cancelling
+* Password resetting
+* E-mail resetting
 
 To do pages for user:
 product-detail
-bestellingen
-instellingen
 
 to do for render:
 categories for products
-Nav everywhere
+create more PHP render files (/lib/render/)
 
 To do for all inputs:
 Security, htmlspecialchars, don't trust user!!!
@@ -37,3 +34,8 @@ could have:
 Mailing functionality
 order Ajax folder into subdirectories to clean the URL (/order/cancel.php instead of cancelOrder.php)
 rebuild ajax js functions into a more organized ajax.js with possible HTTP Client
+Models for all repositories
+
+
+NEXT:
+* Instellingen.php style
