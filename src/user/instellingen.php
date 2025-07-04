@@ -23,33 +23,29 @@ function requiredBodyExists(array $body): bool
     return true;
 }
 
-function resetPassword()
+function resetPassword(FingerprintService $fp, UserService $user): void
 {
-    global $fingerprint, $user;
-
-    $passwordVerified = $fingerprint->verifyPassword($_POST['old-password']);
+    $passwordVerified = $fp->verifyPassword($_POST['old-password']);
         
     if (!$passwordVerified) {
         header("Location: instellingen.php?error=Uw wachtwoord klopt niet.");
-        return;
+        exit;
     } else if ($_POST['new-password'] !== $_POST['new-password-confirm']) {
         header("Location: instellingen.php?error=De wachtwoorden moeten overeen komen.");
-        return;
+        exit;
     }
 
     $user->setPassword($_POST['new-password']);
     return;
 }
 
-function resetMail()
+function resetMail(FingerprintService $fp, UserService $user)
 {
-    global $fingerprint, $user;
-    
-    $passwordVerified = $fingerprint->verifyPassword($_POST['password']);
+    $passwordVerified = $fp->verifyPassword($_POST['password']);
 
     if (!$passwordVerified) {
         header("Location: instellingen.php?error=Uw wachtwoord klopt niet.");
-        return;
+        exit;
     }
 
     $user->setMail($_POST['new-mail']);
@@ -66,13 +62,13 @@ if ("POST" === $_SERVER["REQUEST_METHOD"]) {
     $requestType = $_POST["request-type"];
 
     if ('password-reset' === $requestType && requiredBodyExists(['old-password', 'new-password', 'new-password-confirm'])) {
-        resetPassword();
+        resetPassword($fingerprint, $user);
         header("Location: instellingen.php?msg=Uw wachtwoord is aangepast");
-        return;
+        exit;
     } else if ('mail-reset' === $requestType && requiredBodyExists(['password', 'new-mail'])) {
-        resetMail();
+        resetMail($fingerprint, $user);
         header("Location: instellingen.php?msg=Uw e-mail is aangepast");
-        return;
+        exit;
     }
 }
 

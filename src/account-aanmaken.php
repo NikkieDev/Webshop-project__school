@@ -13,7 +13,7 @@ $userService = UserService::getInstance();
 
 if (!$fingerprint->isGuest()) {
     header("Location: index.php?referrer=account-aanmaken.php");
-    return;
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (isset($_GET['referrer'])) {
             header("Location: " . $_GET["referrer"] . "?referrer=account-aanmaken.php");
-            return;
+            exit;
         }
 
         header("Location: index.php?referrer=account-aanmaken.php");
