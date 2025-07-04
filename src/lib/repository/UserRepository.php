@@ -40,6 +40,22 @@ final class UserRepository extends BaseRepository
         }
     }
 
+    public function getUserCredentialsByUuid($uuid)
+    {
+        $stmt = $this->getConnection()->prepare("
+            SELECT password FROM User WHERE uuid = :uuid LIMIT 1
+        ");
+
+        $stmt->execute([":uuid"=> $uuid]);
+        $result = $stmt->fetch();
+
+        if (!$result) {
+            return null;
+        }
+
+        return $result['password'];
+    }
+
     public function userWithEmailExists($email): bool | string
     {
         $stmt = $this->getConnection()->prepare("SELECT uuid FROM User WHERE email = :mail");
@@ -89,5 +105,23 @@ final class UserRepository extends BaseRepository
     {
         $stmt = $this->getConnection()->prepare('DELETE FROM User WHERE uuid = :uuid');
         $stmt->execute([':uuid' => $uuid]);
+    }
+
+    public function updatePassword(string $uuid, string $passwordHash)
+    {
+        $stmt = $this->getConnection()->prepare('
+            UPDATE User SET password = :hash WHERE uuid = :uuid
+        ');
+
+        $stmt->execute([':hash' => $passwordHash, ':uuid'=> $uuid]);
+    }
+
+    public function updateMail(string $uuid, string $mail)
+    {
+        $stmt = $this->getConnection()->prepare('
+            UPDATE User SET email = :mail WHERE uuid = :uuid
+        ');
+
+        $stmt->execute([':mail' => $mail, ':uuid'=> $uuid]);
     }
 }

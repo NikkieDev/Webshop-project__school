@@ -28,7 +28,6 @@ class FingerprintService
 
     private function __construct()
     {
-
         $this->session = SessionManager::getInstance();
         $this->userRepository = new UserRepository();
         $this->userService = UserService::getInstance();
@@ -83,6 +82,17 @@ class FingerprintService
     {
         $this->clearUserCookie();
         $this->userService->setGuest($this->user);
+    }
+
+    public function verifyPassword(string $password)
+    {
+        $userSavedPass = $this->userRepository->getUserCredentialsByUuid($this->getUser());
+
+        if (!$userSavedPass) {
+            return false;
+        }
+
+        return password_verify($password, $userSavedPass);
     }
 
     private function clearUserCookie()

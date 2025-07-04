@@ -5,9 +5,76 @@ session_start();
 
 require_once __DIR__ . "/../lib/FingerprintService.php";
 require_once __DIR__ . "/../lib/SessionManager.php";
+require_once __DIR__ . "/../lib/UserService.php";
 
 $fingerprint = FingerprintService::getInstance();
+$user = UserService::getInstance();
 $session = SessionManager::getInstance();
+
+
+function requiredBodyExists(array $body): bool
+{
+    foreach ($body as $field) { 
+        if (!isset($_POST[$field])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function resetPassword()
+{
+    global $fingerprint, $user;
+
+    $passwordVerified = $fingerprint->verifyPassword($_POST['old-password']);
+        
+    if (!$passwordVerified) {
+        header("Location: instellingen.php?error=Uw wachtwoord klopt niet.");
+        return;
+    } else if ($_POST['new-password'] !== $_POST['new-password-confirm']) {
+        header("Location: instellingen.php?error=De wachtwoorden moeten overeen komen.");
+        return;
+    }
+
+    $user->setPassword($_POST['new-password']);
+    return;
+}
+
+function resetMail()
+{
+    global $fingerprint, $user;
+    
+    $passwordVerified = $fingerprint->verifyPassword($_POST['password']);
+
+    if (!$passwordVerified) {
+        header("Location: instellingen.php?error=Uw wachtwoord klopt niet.");
+        return;
+    }
+
+    $user->setMail($_POST['new-mail']);
+    return;
+}
+
+if ("POST" === $_SERVER["REQUEST_METHOD"]) {
+    $requestType = '';
+
+    if (!isset($_POST["request-type"])) {
+        return;
+    }
+
+    $requestType = $_POST["request-type"];
+
+    if ('password-reset' === $requestType && requiredBodyExists(['old-password', 'new-password', 'new-password-confirm'])) {
+        resetPassword();
+        header("Location: instellingen.php?msg=Uw wachtwoord is aangepast");
+        return;
+    } else if ('mail-reset' === $requestType && requiredBodyExists(['password', 'new-mail'])) {
+        resetMail();
+        header("Location: instellingen.php?msg=Uw e-mail is aangepast");
+        return;
+    }
+}
 
 ?>
 
@@ -22,9 +89,42 @@ $session = SessionManager::getInstance();
 <body>
     <?php include __DIR__ ."/../partials/header.php" ?>
     <section class="instellingen-wrapper">
-        <!-- reset password -->
-        <!-- reset email -->
-        <!-- delete account -->
+        <?php if (isset($_GET['error'])) { ?>
+            <div class="flash-card flash-warning"><span class="flash-content"><?= $_GET['error']; ?></span></div>
+        <?php } else if (isset($_GET['msg'])) { ?>
+            <div class="flash-card flash-success"><span class="flash-content"><?= $_GET['msg']; ?></span></div>
+        <?php } ?>
+        <form method="POST" class="password-form">
+            <input type="hidden" name="request-type" value="password-reset">
+            <div class="input-wrapper">
+                <label for="old-password">Oud wachtwoord</label>
+                <input type="password" name="old-password" required>
+            </div>
+            <div class="input-wrapper">
+                <label for="new-password">Nieuw wachtwoord</label>
+                <input type="password" name="new-password" required>
+            </div>
+            <div class="input-wrapper">
+                <label for="new-password-confirm">Nieuw wachtwoord herhalen</label>
+                <input type="password" name="new-password-confirm" required>
+            </div>
+
+            <button type="submit">Vervangen</button>
+        </form>
+
+        <form method="POST" class="mail-form">
+            <input type="hidden" name="request-type" value="mail-reset">
+            <div class="input-wrapper">
+                <label for="password">Wachtwoord</label>
+                <input type="password" name="password" required>
+            </div>
+            <div class="input-wrapper">
+                <label for="new-mail">Nieuw e-mail adres</label>
+                <input type="email" name="new-mail" required>
+            </div>
+
+            <button type="submit">Vervangen</button>
+        </form>
     </section>
 </body>
 </html>

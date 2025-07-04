@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/lib.css">
-    <!-- <link rel="stylesheet" href="/css/account-aanmaken.css"> -->
     <title>Account aanmaken</title>
 </head>
 <body>

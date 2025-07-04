@@ -28,10 +28,12 @@ Nav everywhere
 
 To do for all inputs:
 Security, htmlspecialchars, don't trust user!!!
+CSRF?
 
 also must:
 product categories
 
 could have:
+Mailing functionality
 order Ajax folder into subdirectories to clean the URL (/order/cancel.php instead of cancelOrder.php)
 rebuild ajax js functions into a more organized ajax.js with possible HTTP Client

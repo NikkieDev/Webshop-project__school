@@ -62,4 +62,15 @@ class UserService
         setcookie('user', $user->getUuid(), time() + (86400 * 90), '/');
         $_COOKIE['user'] = $user->getUuid();
     }
+
+    public function setPassword(string $password)
+    {
+        $passw = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->updatePassword($this->getUser(), $passw);
+    }
+
+    public function setMail(string $mail)
+    {
+        $this->userRepository->updateMail($this->getUser(), $mail);
+    }
 }
