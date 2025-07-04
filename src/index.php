@@ -29,7 +29,7 @@ $session = SessionManager::getInstance();
                 <div class="product-wrapper">
                     <div class="product">
                         <?php $productUuid = $product['uuid']; ?>
-                        <h3 class="product-name"><?= $product['title']; ?></h3>
+                        <a href="/product.php?pid=<?= $productUuid ?>"><h3 class="product-name"><?= $product['title']; ?></h3></a>
                         <span class="product-price`">&euro; <?= $product['price']; ?></span>
                         <button onclick="addToCart('<?= $productUuid ?>')">Toevoegen</button>
                     </div>

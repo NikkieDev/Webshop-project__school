@@ -5,7 +5,9 @@ use shop;
 CREATE TABLE IF NOT EXISTS Product(
     uuid VARCHAR(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL DEFAULT 'New Product',
-    price DECIMAL(6,2) NOT NULL DEFAULT '1.99'
+    price DECIMAL(6,2) NOT NULL DEFAULT '1.99',
+    `description` VARCHAR(512) DEFAULT "Item description",
+    `category` VARCHAR(128) -- -> turn into separate table with foreign key
 );
 
 CREATE TABLE IF NOT EXISTS User(
@@ -48,22 +50,28 @@ CREATE TABLE IF NOT EXISTS `Order`(
     FOREIGN KEY (UserUuid) REFERENCES User(uuid)
 );
 
-INSERT INTO Product(uuid, title, price) VALUES (
+INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
     UUID(),
     'Pear Watch 10',
-    429.99
+    429.99,
+    "This is a beautiful description",
+    'Tech'
 );
 
-INSERT INTO Product(uuid, title, price) VALUES (
+INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
     UUID(),
     'Pear Watch SE',
-    217.99
+    217.99,
+    "This is a beautiful description",
+    'Tech'
 );
 
-INSERT INTO Product(uuid, title, price) VALUES (
+INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
     UUID(),
     'Pear Watch Ultra 3',
-    1379.99
+    1379.99,
+    "This is a beautiful description",
+    'Tech'
 );
 
 INSERT INTO User(uuid, email, username, `password`, `type`) VALUES (

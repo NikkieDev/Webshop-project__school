@@ -18,11 +18,11 @@ final class ProductRepository extends BaseRepository
     public function findById(string $uuid)
     {
         $stmt = $this->getConnection()->prepare("
-            SELECT uuid, title, price, `description`, category FROM Product WHERE uuid = :uuid
+            SELECT uuid, title, price, `description`, category FROM Product WHERE uuid = :uuid LIMIT 1
         ");
 
         $stmt->execute([':uuid' => $uuid]);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
         return $results;
     }
 }
