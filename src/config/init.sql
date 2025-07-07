@@ -2,12 +2,18 @@ CREATE DATABASE IF NOT EXISTS shop;
 
 use shop;
 
+CREATE TABLE IF NOT EXISTS `Category`(
+    uuid VARCHAR(36) PRIMARY KEY,
+    title VARCHAR(36) NOT NULL DEFAULT 'New Category' UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS Product(
     uuid VARCHAR(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL DEFAULT 'New Product',
     price DECIMAL(6,2) NOT NULL DEFAULT '1.99',
     `description` VARCHAR(512) DEFAULT "Item description",
-    `category` VARCHAR(128) -- -> turn into separate table with foreign key
+    category VARCHAR(36),
+    FOREIGN KEY (category) REFERENCES Category(title) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS User(
@@ -50,12 +56,15 @@ CREATE TABLE IF NOT EXISTS `Order`(
     FOREIGN KEY (UserUuid) REFERENCES User(uuid)
 );
 
+INSERT INTO Category(uuid, title) VALUES (UUID(), 'Wearable');
+INSERT INTO Category(uuid, title) VALUES (UUID(), 'Phone');
+
 INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
     UUID(),
     'Pear Watch 10',
     429.99,
     "This is a beautiful description",
-    'Tech'
+    'Wearable'
 );
 
 INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
@@ -63,7 +72,7 @@ INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
     'Pear Watch SE',
     217.99,
     "This is a beautiful description",
-    'Tech'
+    'Wearable'
 );
 
 INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
@@ -71,7 +80,31 @@ INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
     'Pear Watch Ultra 3',
     1379.99,
     "This is a beautiful description",
-    'Tech'
+    'Wearable'
+);
+
+INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
+    UUID(),
+    'youPhone 12',
+    429.99,
+    "This is a beautiful description",
+    'Phone'
+);
+
+INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
+    UUID(),
+    'youPhone SE',
+    217.99,
+    "This is a beautiful description",
+    'Phone'
+);
+
+INSERT INTO Product(uuid, title, price, `description`, category) VALUES (
+    UUID(),
+    'youPhone 16 Plus Expert',
+    1379.99,
+    "This is a beautiful description",
+    'Phone'
 );
 
 INSERT INTO User(uuid, email, username, `password`, `type`) VALUES (

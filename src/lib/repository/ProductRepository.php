@@ -25,4 +25,15 @@ final class ProductRepository extends BaseRepository
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
         return $results;
     }
+
+    public function getByCategory(string $category): array
+    {
+        $stmt = $this->getConnection()->prepare('
+            SELECT uuid, title, price, `description` category FROM Product WHERE category = :category
+        ');
+
+        $stmt->execute([':category'=> $category]);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
 }

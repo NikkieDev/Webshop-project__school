@@ -39,3 +39,6 @@ if (!$product) {
     </section>
 </body>
 </html>
+
+<!-- andere items in dezelfde category -->
+<!-- laatst bekeken (cookies) -->
