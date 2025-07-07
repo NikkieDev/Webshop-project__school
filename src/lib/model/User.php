@@ -36,4 +36,14 @@ class User
     {
         $this->username = $username;
     }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
 }

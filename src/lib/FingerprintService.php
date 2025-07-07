@@ -51,6 +51,13 @@ class FingerprintService
         }
     }
 
+    public function transformGuestIntoUserAccount($username, $password, $email, $user)
+    {
+        $this->userService->transformGuestToUser($username, $password, $email, $user);
+        $this->logout();
+        return;
+    }
+
     public function getUser()
     {
         return $this->userService->getUser();
@@ -68,11 +75,13 @@ class FingerprintService
 
         if ($user) {
             $userData = $this->userRepository->getUserDataByCredentials($email, $password);
+            $userData['email'] = $email;
 
             $this->userRepository->deleteUser($currentGuest);
             $this->session->unset($currentGuest);
             $this->clearUserCookie();
             $this->userService->setUser($this->user, $userData);
+            $this->session->setData($userData);
         } else {
             throw new Exception("Gebruiker bestaat niet!");
         }

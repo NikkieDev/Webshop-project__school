@@ -20,16 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Util::verifyPropertyExists($_POST, ["username", "password", "email"]);
 
     try {
-        $userService->transformGuestToUser($_POST['username'], $_POST['password'], $_POST['email'], $fingerprint->getUser());
-
-        if (isset($_GET['referrer'])) {
-            header("Location: " . $_GET["referrer"] . "?referrer=account-aanmaken.php");
-            exit;
-        }
-
-        header("Location: index.php?referrer=account-aanmaken.php");
+        $fingerprint->transformGuestIntoUserAccount($_POST['username'], $_POST['password'], $_POST['email'], $fingerprint->getUser());
+        header("Location: /inloggen.php?referrer=account-aanmaken.php");
+        exit;
     } catch (Exception $e) {
         header("Location: account-aanmaken.php?flash=" . $e->getMessage());
+        exit;
     }
 }
 ?>

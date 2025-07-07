@@ -32,9 +32,25 @@ class SessionManager
         }
     }
 
+    public function getData(string $propName)
+    {
+        $data = $_SESSION[$this->userService->getUser()]['data'];
+
+        if (!isset($data)) {
+            return null;
+        }
+
+        return $data[$propName];
+    }
+
     public function set(string $name, $value)
     {
         $_SESSION[$this->userService->getUser()][$name] = $value;
+    }
+
+    public function setData(array $data)
+    {
+        $_SESSION[$this->userService->getUser()]['data'] = $data;
     }
 
     public function unset(string $name)

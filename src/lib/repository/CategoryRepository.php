@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once "BaseRepository.php";
+
 final class CategoryRepository extends BaseRepository
 {
     public function getCategories()

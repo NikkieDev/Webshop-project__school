@@ -58,6 +58,7 @@ class UserService
         $user->setType($userData['type']);
         $user->setUsername($userData['username']);
         $user->setUuid($userData['uuid']);
+        $user->setEmail($userData['email']);
 
         setcookie('user', $user->getUuid(), time() + (86400 * 90), '/');
         $_COOKIE['user'] = $user->getUuid();

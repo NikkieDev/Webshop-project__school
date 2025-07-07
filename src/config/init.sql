@@ -56,6 +56,12 @@ CREATE TABLE IF NOT EXISTS `Order`(
     FOREIGN KEY (UserUuid) REFERENCES User(uuid)
 );
 
+CREATE TABLE IF NOT EXISTS `ContactRequest`(
+    uuid VARCHAR(36) PRIMARY KEY,
+    email VARCHAR(64) NOT NULL,
+    body VARCHAR(512) NOT NULL
+);
+
 INSERT INTO Category(uuid, title) VALUES (UUID(), 'Wearable');
 INSERT INTO Category(uuid, title) VALUES (UUID(), 'Phone');
 
