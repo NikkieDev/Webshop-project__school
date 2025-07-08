@@ -15,27 +15,25 @@ Currently:
 * Order cancelling
 * Password resetting
 * E-mail resetting
+* Contact
+* Categories for products
 
 To do pages for user:
 product-detail
 
 to do for render:
-categories for products
 create more PHP render files (/lib/render/)
 
 To do for all inputs:
 Security, htmlspecialchars, don't trust user!!!
 CSRF?
 
-also must:
-product categories
-
 could have:
 Mailing functionality
 order Ajax folder into subdirectories to clean the URL (/order/cancel.php instead of cancelOrder.php)
 rebuild ajax js functions into a more organized ajax.js with possible HTTP Client
 Models for all repositories
-
+Sessions, instead of raw user tokens
 
 NEXT:
 * Instellingen.php style
