@@ -55,6 +55,7 @@ $referrer = $_GET['referrer'];
                             </div>
                         </div>
                     <?php } ?>
+                    <!-- show total + add verzendkosten -->
                     <a href="afrekenen.php">Afrekenen</a>
                 </div>
             </div>
