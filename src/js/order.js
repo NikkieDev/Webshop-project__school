@@ -1,3 +1,8 @@
+const availableActions = {
+    redo: 'reOrder',
+    cancel: 'cancelOrder',
+};
+
 async function makePostRequest(ajaxCallName, formData) {
     try {
         const response = await fetch(`/ajax/${ajaxCallName}.php`, {
@@ -13,20 +18,22 @@ async function makePostRequest(ajaxCallName, formData) {
     }
 }
 
-async function cancelOrder(orderId)
+async function makeOrderRequest(action, orderId)
 {
     const formData = new FormData();
     formData.append('order', orderId);
 
-    await makePostRequest('cancelOrder', formData);
+    await makePostRequest(action, orderId);
+}
+
+async function cancelOrder(orderId)
+{
+    await makeOrderRequest(availableActions.cancel, orderId);
     location.reload();
 }
 
 async function reOrder(orderId)
 {
-    const formData = new FormData()
-    formData.append('order', orderId);
-
-    await makePostRequest('reOrder', formData);
+    await makeOrderRequest(availableActions.redo, orderId);
     location.reload();
 }
