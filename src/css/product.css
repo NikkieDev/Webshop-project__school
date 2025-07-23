@@ -7,7 +7,33 @@
 }
 
 .product-detail--wrapper>.product-wrapper {
+    display: flex;
+    flex-direction: row;
     width: 100%;
+}
+
+.product-data {
+    display: flex;
+    flex-direction: column;
+    
+    &>.product-data--pricing {
+        margin-top: auto;
+    }
+}
+
+.product-thumb--wrapper {
+    margin-left: auto;
+    height: 100%;
+    width: 35%;
+    border: 3px solid rgba(0,0,0,0.7);
+    border-radius: 32px;
+}
+
+.product-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 28px;
 }
 
 .other-from-category--wrapper {

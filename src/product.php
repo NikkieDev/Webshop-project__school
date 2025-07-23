@@ -38,12 +38,17 @@ require_once "./lib/render/loadProductsByCategory.php";
     <?php include_once 'partials/header.php' ?>
     <section class="product-detail--wrapper">
         <div class="product-wrapper">
-            <h3><?= $product['title'] ?></h3>
-            <span><?= $product['category'] ?></span>
+            <div class="product-data">
+                <h3><?= $product['title'] ?></h3>
+                <span><?= $product['category'] ?></span>
 
-            <p><?= $product['description'] ?></p>
-            <p>&euro; <?= $product['price'] ?></p>
-            <button onclick="addToCart('<?= $pid ?>')">Toevoegen</button>
+                <p><?= $product['description'] ?></p>
+                <p class="product-data--pricing">&euro; <?= $product['price'] ?></p>
+                <button onclick="addToCart('<?= $pid ?>')">Toevoegen</button>
+            </div>
+            <div class="product-thumb--wrapper">
+                <img src="/assets/pear-watch-ultra.png" alt="" class="product-thumb">
+            </div>
         </div>
 
         <div class="other-from-category--wrapper">
@@ -65,6 +70,4 @@ require_once "./lib/render/loadProductsByCategory.php";
     </section>
 </body>
 </html>
-
-<!-- andere items in dezelfde category -->
 <!-- laatst bekeken (cookies) -->
