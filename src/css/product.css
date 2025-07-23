@@ -1,0 +1,25 @@
+.product-detail--wrapper {
+    display: flex;
+    margin: 0 auto;
+    gap: 12px;
+    width: 1280px;
+    flex-direction: column;
+}
+
+.product-detail--wrapper>.product-wrapper {
+    width: 100%;
+}
+
+.other-from-category--wrapper {
+    margin-top: 56px;
+}
+
+.other-from-category {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.product {
+    width: fit-content;
+}

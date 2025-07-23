@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS Product(
     price DECIMAL(6,2) NOT NULL DEFAULT '1.99',
     `description` VARCHAR(512) DEFAULT "Item description",
     category VARCHAR(36),
+    stock INT(4) NOT NULL DEFAULT 0,
     FOREIGN KEY (category) REFERENCES Category(title) ON DELETE SET NULL
 );
 
