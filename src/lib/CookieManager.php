@@ -13,13 +13,9 @@ class CookieManager
         return $_COOKIE[$key] ?? null;
     }
 
-    public function set(string $key, $value, bool $permanent = false)
+    public function set(string $key, $value)
     {
         $time = 86400 * 365; // 1 year;
-
-        if ($permanent) {
-            $time *= 10; // 10 years
-        }
 
         $_COOKIE[$key] = $value;
         setcookie($key, $value, time() + $time, "/");
