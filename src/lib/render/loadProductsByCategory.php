@@ -12,3 +12,5 @@ if (!isset($_GET['cat'])) {
 
 $productRepository = new ProductRepository();
 $products = $productRepository->getByCategory($_GET['cat']);
+
+?>

@@ -2,16 +2,12 @@
 
 declare(strict_types=1);
 
-session_start();
+require_once 'lib/init.php';
 
 require_once isset($_GET['cat']) ? 'lib/render/loadProductsByCategory.php' : 'lib/render/loadProducts.php';
 
 require_once 'lib/render/loadCategories.php';
-require_once 'lib/FingerprintService.php';
-require_once 'lib/SessionManager.php';
 
-$fingerprint = FingerprintService::getInstance();
-$session = SessionManager::getInstance();
 ?>
 
 <html>

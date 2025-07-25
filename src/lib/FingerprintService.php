@@ -35,6 +35,7 @@ class FingerprintService
         
         if (empty($_COOKIE['user'])) {
             $this->userService->setGuest($this->user);
+            header("Refresh:0");
         } else {
             $this->user->setUuid($_COOKIE['user']);
         }

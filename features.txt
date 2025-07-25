@@ -41,3 +41,10 @@ order Ajax folder into subdirectories to clean the URL (/order/cancel.php instea
 rebuild ajax js functions into a more organized ajax.js with possible HTTP Client
 Models for all repositories
 Sessions, instead of raw user tokens
+
+
+
+
+*** NEXT TO DO
+----
+Make an autoload.php or init.php that always calls X files (Fingerprint, Session, etc.);

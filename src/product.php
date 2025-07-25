@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . "/lib/ProductService.php";
+require_once __DIR__ . "/lib/CookieManager.php";
 
 if (!isset($_GET['pid'])) {
     header("Location: /error/404.php?return=/index.php");
@@ -17,6 +18,43 @@ if (!$product) {
     header("Location: /error/404.php?return=/index.php");
     exit;
 }
+
+// function createRecentlySeenObj() {
+//     global $pid;
+
+//     return [
+//         'id' => $pid,
+//         'date' => date('Y-m-d H:i:s'),
+//     ];
+// }
+
+// $cookieManager = new CookieManager();
+// $recentlySeen = $cookieManager->get('recentlyseen');
+// $objForRecentlySeen = null;
+
+// try {
+//     if (!$recentlySeen) throw new Exception('No \'Recently seen\' cookie exists');
+
+//     $recentlySeenObj = json_decode($recentlySeen, true);
+//     $productInRecentlySeen = array_filter($recentlySeenObj, fn ($p) => $p['id'] == $pid);
+
+//     if ($productInRecentlySeen) {
+//         $recentlySeenObj = array_filter($recentlySeenObj, fn ($p) => $p['id'] !== $pid); // remove every instance of the current product;
+
+//     }
+    
+//     $recentlySeenObj[] = createRecentlySeenObj();
+//     // if (!$productInRecentlySeen) {
+//     //     // $objForRecentlySeen = createRecentlySeenObj();
+//     //     $recentlySeenObj[] = createRecentlySeenObj();
+//     // }
+
+//     // $recentlySeenObj = array_filter($recentlySeenObj, fn ($p) => $p['id'] !== $pid); // remove every instance of the current product;
+//     $cookieManager->set('recentlyseen', json_encode($recentlySeenObj));
+
+// } catch (Exception $e) {
+//     $cookieManager->set('recentlyseen', json_encode([createRecentlySeenObj()]));
+// }
 
 $_GET['cat'] = $product['category'];
 require_once "./lib/render/loadProductsByCategory.php";

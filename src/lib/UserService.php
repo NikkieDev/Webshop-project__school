@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once "repository/UserRepository.php";
+require_once "CookieManager.php";
 require_once "model/User.php";
 
 class UserService
@@ -10,6 +11,7 @@ class UserService
     private static ?UserService $instance = null;
 
     private UserRepository $userRepository;
+    private CookieManager $cookieManager;
 
     public static function getInstance(): UserService
     {
@@ -19,6 +21,7 @@ class UserService
     private function __construct()
     {
         $this->userRepository = new UserRepository();
+        $this->cookieManager = new CookieManager();
     }
 
     public function transformGuestToUser($username, $password, $email, $user)
@@ -49,8 +52,7 @@ class UserService
             $user->setUuid($newUserUuid);
         }
 
-        setcookie('user', $newUserUuid, time() + (86400 * 90), '/');
-        $_COOKIE['user'] = $newUserUuid;
+        $this->cookieManager->set('user', $newUserUuid);
     }
 
     public function setUser(User &$user, $userData)
@@ -60,8 +62,7 @@ class UserService
         $user->setUuid($userData['uuid']);
         $user->setEmail($userData['email']);
 
-        setcookie('user', $user->getUuid(), time() + (86400 * 90), '/');
-        $_COOKIE['user'] = $user->getUuid();
+        $this->cookieManager->set('user', $user->getUuid());
     }
 
     public function setPassword(string $password)

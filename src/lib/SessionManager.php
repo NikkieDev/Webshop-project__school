@@ -9,8 +9,12 @@ class SessionManager
     private static ?SessionManager $instance = null;
     private UserService $userService;
 
-    public static function getInstance(): SessionManager
+    public static function getInstance(): SessionManager|null
     {
+        if (null === UserService::getInstance()->getUser()) {
+            return null;
+        }
+
         return self::$instance ??= new SessionManager();
     }
 
@@ -25,11 +29,7 @@ class SessionManager
 
     public function get($name)
     {
-        try {
-            return $_SESSION[$this->userService->getUser()][$name];
-        } catch (Exception) {
-            return null;
-        }
+        return $_SESSION[$this->userService->getUser()][$name] ?? null;
     }
 
     public function getData(string $propName)
