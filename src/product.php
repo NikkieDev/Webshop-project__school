@@ -116,4 +116,3 @@ require_once "./lib/render/loadProductsByCategory.php";
     </section>
 </body>
 </html>
-<!-- laatst bekeken (cookies) -->

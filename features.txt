@@ -17,10 +17,8 @@ Currently:
 * E-mail resetting
 * Contact
 * Categories for products
-
-To do pages for user:
-product-detail
-
+* Recently seen products
+* Other products from same category
 
 to do for render:
 create more PHP render files (/lib/render/)
@@ -28,9 +26,6 @@ create more PHP render files (/lib/render/)
 To do for all inputs:
 Security, htmlspecialchars, don't trust user!!!
 CSRF?
-
-also must:
-Fix initial load giving error messages for user
 
 could have:
 Models for all repositories
@@ -41,10 +36,3 @@ order Ajax folder into subdirectories to clean the URL (/order/cancel.php instea
 rebuild ajax js functions into a more organized ajax.js with possible HTTP Client
 Models for all repositories
 Sessions, instead of raw user tokens
-
-
-
-
-*** NEXT TO DO
-----
-Make an autoload.php or init.php that always calls X files (Fingerprint, Session, etc.);
