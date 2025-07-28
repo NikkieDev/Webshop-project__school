@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . "/lib/ProductService.php";
-require_once __DIR__ . "/lib/CookieManager.php";
+require_once __DIR__ . '/lib/init.php';
 
 if (!isset($_GET['pid'])) {
     header("Location: /error/404.php?return=/index.php");
@@ -19,42 +19,32 @@ if (!$product) {
     exit;
 }
 
-// function createRecentlySeenObj() {
-//     global $pid;
+function createRecentlySeenObj() {
+    global $pid, $product;
 
-//     return [
-//         'id' => $pid,
-//         'date' => date('Y-m-d H:i:s'),
-//     ];
-// }
+    return [
+        'id' => $pid,
+        'date' => date('Y-m-d H:i:s'),
+    ];
+}
 
-// $cookieManager = new CookieManager();
-// $recentlySeen = $cookieManager->get('recentlyseen');
-// $objForRecentlySeen = null;
+$cookieManager = new CookieManager();
+$recentlySeen = $cookieManager->get('recentlyseen');
+$recentlySeenIds = [];
 
-// try {
-//     if (!$recentlySeen) throw new Exception('No \'Recently seen\' cookie exists');
+if ($recentlySeen) {
+    $recentlySeenObj = json_decode($recentlySeen, true);
 
-//     $recentlySeenObj = json_decode($recentlySeen, true);
-//     $productInRecentlySeen = array_filter($recentlySeenObj, fn ($p) => $p['id'] == $pid);
+    $recentlySeenObjWithoutSelf = array_filter($recentlySeenObj, fn($item) => $item['id'] !== $pid); // remove any instance of self from obj
+    $recentlySeenObjWithoutSelf[] = createRecentlySeenObj();
 
-//     if ($productInRecentlySeen) {
-//         $recentlySeenObj = array_filter($recentlySeenObj, fn ($p) => $p['id'] !== $pid); // remove every instance of the current product;
+    $recentlySeenIds = array_map(fn($item) => $item['id'], $recentlySeenObjWithoutSelf);
 
-//     }
-    
-//     $recentlySeenObj[] = createRecentlySeenObj();
-//     // if (!$productInRecentlySeen) {
-//     //     // $objForRecentlySeen = createRecentlySeenObj();
-//     //     $recentlySeenObj[] = createRecentlySeenObj();
-//     // }
-
-//     // $recentlySeenObj = array_filter($recentlySeenObj, fn ($p) => $p['id'] !== $pid); // remove every instance of the current product;
-//     $cookieManager->set('recentlyseen', json_encode($recentlySeenObj));
-
-// } catch (Exception $e) {
-//     $cookieManager->set('recentlyseen', json_encode([createRecentlySeenObj()]));
-// }
+    $cookieManager->set('recentlyseen', json_encode($recentlySeenObjWithoutSelf));
+} else {
+    $cookieManager->set('recentlyseen', json_encode([createRecentlySeenObj()]));
+    $recentlySeenIds[] = $pid;
+}
 
 $_GET['cat'] = $product['category'];
 require_once "./lib/render/loadProductsByCategory.php";
@@ -99,6 +89,24 @@ require_once "./lib/render/loadProductsByCategory.php";
                             <?php $productUuid = $productInCategory['uuid']; ?>
                             <a href="/product.php?pid=<?= $productUuid ?>"><h3 class="product-name"><?= $productInCategory['title']; ?></h3></a>
                             <span class="product-price`">&euro; <?= $productInCategory['price']; ?></span>
+                            <button onclick="addToCart('<?= $productUuid ?>')">Toevoegen</button>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+
+        <div class="recently-seen--wrapper">
+            <h3>Bekijk geschiedenis</h3>
+            <div class="recently-seen">
+                <?php foreach (array_reverse($recentlySeenIds) as $recentlySeenId) { ?>
+                    <?php $recentlySeenItem = ProductService::getInstance()->getProductById($recentlySeenId) ?>
+                    <?php if (!$recentlySeenItem) continue; ?>
+                    <div class="product-wrapper">
+                        <div class="product">
+                            <?php $productUuid = $recentlySeenItem['uuid']; ?>
+                            <a href="/product.php?pid=<?= $productUuid ?>"><h3 class="product-name"><?= $recentlySeenItem['title']; ?></h3></a>
+                            <span class="product-price`">&euro; <?= $recentlySeenItem['price']; ?></span>
                             <button onclick="addToCart('<?= $productUuid ?>')">Toevoegen</button>
                         </div>
                     </div>
