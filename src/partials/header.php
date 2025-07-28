@@ -6,6 +6,8 @@ $fingerprint = FingerprintService::getInstance();
 $session = SessionManager::getInstance();
 
 ?>
+<script src="/js/cookie.js" defer></script>
+<script src="/js/dark-mode.js" defer></script>
 
 <section class="header-wrapper">
     <?php if ($session->get('username')) { ?>
@@ -30,4 +32,11 @@ $session = SessionManager::getInstance();
             <?php } ?>
         </div>
     </nav>
+
+    <div class="dark-mode--wrapper">
+        <div class="dark-mode">
+            <label for="dark-mode-toggle">Dark mode</label>
+            <input type="checkbox" name="dark-mode-toggle" checked="true" class="dark-mode-toggle">
+        </div>
+    </div>
 </section>

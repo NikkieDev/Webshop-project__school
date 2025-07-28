@@ -16,6 +16,10 @@ html, body {
     /* justify-content: start; */
 }
 
+body.theme-dark {
+    /* convert every color to a variable */
+}
+
 section {
     max-width: 1280px;
     display: flex;
@@ -44,6 +48,19 @@ button, .btn {
     text-decoration: none;
     max-width: fit-content;
     align-self: center
+}
+
+.dark-mode--wrapper {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+}
+
+.dark-mode {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
 }
 
 nav {
