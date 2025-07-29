@@ -36,3 +36,6 @@ order Ajax folder into subdirectories to clean the URL (/order/cancel.php instea
 rebuild ajax js functions into a more organized ajax.js with possible HTTP Client
 Models for all repositories
 Sessions, instead of raw user tokens
+
+resources:
+https://www.php.net/manual/en/function.array-intersect.php#:~:text=I%20use%20array_intersect,as%20%20well%20obviously.
