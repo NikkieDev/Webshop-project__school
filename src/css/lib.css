@@ -4,6 +4,12 @@
     font-family: "Inter", sans-serif;;
 }
 
+:root {
+    --bg-color: #f4f0fd;
+    --cta-color: black;
+    --text-color: black;
+}
+
 html, body {
     min-height: 100dvh;
     min-width: 100dvw;
