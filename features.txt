@@ -30,7 +30,6 @@ CSRF?
 could have:
 Models for all repositories
 Filled in wrong password? Re-use previous email
-dark mode with cookies
 Mailing functionality
 order Ajax folder into subdirectories to clean the URL (/order/cancel.php instead of cancelOrder.php)
 rebuild ajax js functions into a more organized ajax.js with possible HTTP Client

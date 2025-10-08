@@ -19,6 +19,9 @@ $session = SessionManager::getInstance();
                 <a class="nav-item" href="/user/instellingen.php?referrer=index.php">Instellingen</a>
             <?php } ?>
             <a class="nav-item" href="/contact.php">Contact</a>
+            <?php if ($fingerprint->isAdmin()) { ?>
+                <a href="/admin" class="nav-item">Portaal</a>
+            <?php } ?>
         </div>
         <div class="fixed-right">
             <?php if ($fingerprint->isGuest()) { ?>

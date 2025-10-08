@@ -69,6 +69,11 @@ class FingerprintService
         return $this->user->getType() == UserType::GUEST;
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->user->getType() == UserType::ADMIN;
+    }
+
     public function login($email, $password)
     {
         $currentGuest = $this->getUser();

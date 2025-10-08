@@ -1,0 +1,47 @@
+.admin-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.side-nav {
+    display: flex;
+    flex-direction: column;
+    width: 20dvw;
+    height: 100dvh;
+    background-color: rgba(255,255,255);
+}
+
+.side-nav-items {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.side-nav--welcome__message {
+    padding: 6px 24px;
+}
+
+.side-nav--item {
+    display: flex;
+    padding: 6px 24px;
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-top: none;
+    background-color: inherit;
+
+    &:first-of-type,
+    &:last-of-type {
+        border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    &:last-of-type {
+        margin-top: auto;
+        background-color: rgba(240, 80, 80);
+    }
+
+    &:hover {
+        background-color: rgba(240,240,240, 0.5);
+    }
+}
