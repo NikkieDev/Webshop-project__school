@@ -18,12 +18,6 @@ html, body {
     background-color: #f4f0fd;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    /* justify-content: start; */
-}
-
-body.theme-dark {
-    /* convert every color to a variable */
 }
 
 section {
