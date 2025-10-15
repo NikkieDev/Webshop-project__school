@@ -44,4 +44,9 @@
     &:hover {
         background-color: rgba(240,240,240, 0.5);
     }
+
+    &.active {
+        background-color: #6B99FA;
+        color: white;
+    }
 }

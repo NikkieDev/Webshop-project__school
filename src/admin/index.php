@@ -25,16 +25,7 @@ if (!$fingerprintService->isAdmin()) {
 </head>
 <body>
     <div class="admin-wrapper">
-        <aside class="side-nav">
-            <h3 class="side-nav--welcome__message">Welkom admin</h3>
-            <div class="side-nav-items">
-                <a href="/admin/bestellingen.php" class="side-nav--item">Bestellingen</a>
-                <a href="/admin/klanten.php" class="side-nav--item">Klanten</a>
-                <a href="/admin/artikelen.php" class="side-nav--item">Assortiment</a>
-                <a href="/admin/voorraad.php" class="side-nav--item">Voorraad</a>
-                <a href="/ajax/logout.php" class="side-nav--item">Uitloggen</a>
-            </div>
-        </aside>
+        <?php include_once './elements/_sidebar-nav.php' ?>
         <main class="admin-content">
             <!-- show possibly open orders, orders today, and a revenue counter. -->
         </main>
