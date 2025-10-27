@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once "BaseRepository.php";
 require_once __DIR__ . '/../model/CreateOrderProps.php';
+require_once __DIR__ .'/../model/Order.php';
 
 final class OrderRepository extends BaseRepository
 {
@@ -58,16 +59,18 @@ final class OrderRepository extends BaseRepository
     public function getMostRecentOrdersFull(): array
     {
         $stmt = $this->getConnection()->prepare("
-            SELECT o.uuid AS orderId, o.createdAt AS orderCreatedAt, u.email, COUNT(ci.uuid) AS orderLineItems
+            SELECT o.uuid AS orderId, o.createdAt AS orderCreatedAt, o.status AS orderStatus, u.email, COUNT(ci.uuid) AS orderLineItems,
+            SUM(p.price) AS orderValue
             FROM `Order` o
             INNER JOIN User u ON u.uuid = o.UserUuid
             INNER JOIN CartItem ci ON ci.CartUuid = o.CartUuid
+            INNER JOIN Product p ON p.uuid = ci.ProductUuid
             GROUP BY o.uuid
             ORDER BY o.createdAt DESC LIMIT 1
         ");
 
         $stmt->execute();
-        $results = $stmt->fetchAll();
+        $results = array_map(fn($order) => OrderDTO::fromArray($order), $stmt->fetchAll(), $stmt->fetchAll());
 
         if (!$results) {
             return [];

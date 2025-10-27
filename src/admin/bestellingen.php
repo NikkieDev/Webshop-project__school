@@ -35,10 +35,12 @@ $orders = $orderRepository->getMostRecentOrdersFull();
                 </tr>
                 <?php foreach ($orders as $order) { ?>
                     <tr>
-                        <td><?= $order['orderId'] ?></td>
-                        <td><?= $order['email'] ?></td>
-                        <td><?= $order['orderCreatedAt'] ?></td>
-                        <td><?= $order['orderLineItems'] ?></td>
+                        <td><?= $order->getOrderId() ?></td>
+                        <td><?= $order->getUserEmail() ?></td>
+                        <td><?= $order->getCreatedAt()->format('Y-m-d H:i:s') ?></td>
+                        <td><?= $order->getLineItemCount() ?></td>
+                        <td>€<?= $order->getValue() ?></td>
+                        <td><?= $order->getStatus() ?></td>
                     </tr>
                 <?php } ?>
             </table>
