@@ -2,26 +2,13 @@
 
 class CreateOrderProps
 {
-    private string $userUuid = "";
-    private string $streetWithNumber = "";
-    private string $zipCode = "";
-    private string $location = "";
-    private float $price = 0.00;
-    
-
     public function __construct(
-        string $userUuid,
-        string $streetWithNumber,
-        string $zipCode,
-        string $location,
-        float $price
-    )
-    {
-        $this->userUuid = $userUuid;
-        $this->streetWithNumber = $streetWithNumber;
-        $this->zipCode = $zipCode;
-        $this->location = $location;
-        $this->price = $price;
+        private string $userUuid = "",
+        private string $streetWithNumber = "",
+        private string $zipCode = "",
+        private string $location = "",
+        private float $price = 0.00,
+    ) {
     }
 
     public function getUserUuid()

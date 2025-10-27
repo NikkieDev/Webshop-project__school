@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `Order`(
     CartUuid VARCHAR(36),
     UserUuid VARCHAR(36),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `status` INT DEFAULT 0, -- 0 = processing, -1 = cancelled.
+    `status` INT DEFAULT 0, -- 0 = processing, -1 = cancelled, 1 = processed.
     `address` VARCHAR(80) NOT NULL,
     `zipcode` VARCHAR(7) NOT NULL,
     `location` VARCHAR(32) NOT NULL,
