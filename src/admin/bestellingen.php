@@ -1,5 +1,13 @@
 <?php
+
+declare(strict_types= 1);
+
 $activeTab = 'bestellingen';
+
+require_once __DIR__ .'/../lib/repository/OrderRepository.php';
+
+$orderRepository = new OrderRepository();
+$orders = $orderRepository->getMostRecentOrdersFull();
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +35,7 @@ $activeTab = 'bestellingen';
                 </tr>
                 <?php foreach ($orders as $order) { ?>
                     <tr>
-                        <td><?= $order['orderUuid'] ?></td>
+                        <td><?= $order['uuid'] ?></td>
                         <td><?= $order['email'] ?></td>
                         <td><?= $order['orderCreatedAt'] ?></td>
                         <td><?= count($order['lineItems']) ?></td>

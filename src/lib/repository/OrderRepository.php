@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 require_once "BaseRepository.php";
-require_once "CartRepository.php";
 require_once __DIR__ . '/../model/CreateOrderProps.php';
 
 final class OrderRepository extends BaseRepository
 {
-    private CartRepository $cartRepository;
 
     public function __construct()
     {
-        $this->cartRepository = new CartRepository();
     }
 
     public function createOrder(string $cartUuid, CreateOrderProps $props)
@@ -58,6 +55,21 @@ final class OrderRepository extends BaseRepository
         return (bool) $result;
     }
 
+    public function getMostRecentOrdersFull(): array
+    {
+        $stmt = $this->getConnection()->prepare("
+            SELECT * FROM `Order` ORDER BY createdAt DESC LIMIT 1
+        ");
+
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+
+        if (!$results) {
+            return [];
+        }
+
+        return $results;
+    }
 
     public function getUserMostRecentOrders(string $userUuid): array
     {

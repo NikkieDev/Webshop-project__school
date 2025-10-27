@@ -48,7 +48,7 @@ class OrderService
 
         return $orders;
     }
-
+    
     public function cancelOrder(string $orderUuid)
     {
         $this->orderRepository->cancelOrder($orderUuid);
