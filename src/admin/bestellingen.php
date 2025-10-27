@@ -28,17 +28,17 @@ $orders = $orderRepository->getMostRecentOrdersFull();
                     <th>Bestelling</th>
                     <th>Klant</th>
                     <th>Besteld op</th>
-                    <th>Aantal besteld</th>
+                    <th>Artikelen</th>
                     <th>Bestelwaarde</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
                 <?php foreach ($orders as $order) { ?>
                     <tr>
-                        <td><?= $order['uuid'] ?></td>
+                        <td><?= $order['orderId'] ?></td>
                         <td><?= $order['email'] ?></td>
                         <td><?= $order['orderCreatedAt'] ?></td>
-                        <td><?= count($order['lineItems']) ?></td>
+                        <td><?= $order['orderLineItems'] ?></td>
                     </tr>
                 <?php } ?>
             </table>

@@ -58,7 +58,12 @@ final class OrderRepository extends BaseRepository
     public function getMostRecentOrdersFull(): array
     {
         $stmt = $this->getConnection()->prepare("
-            SELECT * FROM `Order` ORDER BY createdAt DESC LIMIT 1
+            SELECT o.uuid AS orderId, o.createdAt AS orderCreatedAt, u.email, COUNT(ci.uuid) AS orderLineItems
+            FROM `Order` o
+            INNER JOIN User u ON u.uuid = o.UserUuid
+            INNER JOIN CartItem ci ON ci.CartUuid = o.CartUuid
+            GROUP BY o.uuid
+            ORDER BY o.createdAt DESC LIMIT 1
         ");
 
         $stmt->execute();
