@@ -23,7 +23,7 @@ async function makeOrderRequest(action, orderId)
     const formData = new FormData();
     formData.append('order', orderId);
 
-    await makePostRequest(action, orderId);
+    await makePostRequest(action, formData);
 }
 
 async function cancelOrder(orderId)
