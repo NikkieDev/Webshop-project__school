@@ -31,7 +31,7 @@ $orders = $orderRepository->getMostRecentOrdersFull();
                     <th>Artikelen</th>
                     <th>Bestelwaarde</th>
                     <th>Status</th>
-                    <th></th>
+                    <th>Acties</th>
                 </tr>
                 <?php foreach ($orders as $order) { ?>
                     <tr>
@@ -41,6 +41,9 @@ $orders = $orderRepository->getMostRecentOrdersFull();
                         <td><?= $order->getLineItemCount() ?></td>
                         <td>€<?= $order->getValue() ?></td>
                         <td><?= $order->getStatus() ?></td>
+                        <td class="actions">
+                            <a href=""></a>
+                        </td>
                     </tr>
                 <?php } ?>
             </table>
