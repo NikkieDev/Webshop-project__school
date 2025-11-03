@@ -31,6 +31,15 @@ final class OrderRepository extends BaseRepository
         return $orderUuid;
     }
 
+    public function shipOrder(string $uuid): void
+    {
+        $stmt = $this->getConnection()->prepare("
+            UPDATE `Order` SET status = 1 WHERE uuid = :order
+        ");
+
+        $stmt->execute([':order' => $uuid]);
+    }
+
     public function findById(string $uuid): array
     {
         $stmt = $this->getConnection()->prepare("
@@ -66,7 +75,7 @@ final class OrderRepository extends BaseRepository
             INNER JOIN CartItem ci ON ci.CartUuid = o.CartUuid
             INNER JOIN Product p ON p.uuid = ci.ProductUuid
             GROUP BY o.uuid
-            ORDER BY o.createdAt DESC LIMIT 1
+            ORDER BY o.createdAt DESC
         ");
 
         $stmt->execute();
@@ -82,7 +91,7 @@ final class OrderRepository extends BaseRepository
     public function getUserMostRecentOrders(string $userUuid): array
     {
         $stmt = $this->getConnection()->prepare("
-            SELECT o.uuid AS OrderId, o.status AS OrderStatus, o.price AS OrderTotal, o.createdAt AS OrderDate, COUNT(ci.uuid) AS itemCount
+            SELECT o.uuid AS orderId, o.status AS orderStatus, o.price AS orderValue, o.createdAt AS orderCreatedAt, COUNT(ci.uuid) AS orderLineItems
             FROM `Order` AS o
             INNER JOIN CartItem AS ci ON ci.CartUuid = o.CartUuid
             WHERE o.UserUuid = :userId
@@ -90,7 +99,7 @@ final class OrderRepository extends BaseRepository
         ");
 
         $stmt->execute([':userId' => $userUuid]);
-        $results = $stmt->fetchAll();
+        $results = array_map(fn($order) => OrderDTO::fromArray($order), $stmt->fetchAll(), $stmt->fetchAll());
 
         if (!$results) {
             return [];

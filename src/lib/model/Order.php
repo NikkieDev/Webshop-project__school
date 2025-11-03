@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+require_once "OrderStatus.php";
+
 class OrderDTO
 {
     private string $orderId;
     private DateTimeImmutable $createdAt;
-    private string $status;
-    private string $userEmail;
+    private OrderStatus $status;
+    private ?string $userEmail;
     private int $lineItemCount;
     private float $orderValue;
 
@@ -14,20 +18,22 @@ class OrderDTO
         $orderDTO = new self();
         $orderDTO->orderId = $data["orderId"];
         $orderDTO->createdAt = new DateTimeImmutable($data["orderCreatedAt"]);
-        $orderDTO->status = self::computeStatus($data["orderStatus"]);
-        $orderDTO->userEmail = $data['email'];
+        $orderDTO->status = OrderStatus::from($data["orderStatus"]);
+        $orderDTO->userEmail = $data['email'] ?? null;
         $orderDTO->lineItemCount = $data['orderLineItems'];
-        $orderDTO->orderValue = $data['orderValue'];
+        $orderDTO->orderValue = (float) $data['orderValue'];
 
         return $orderDTO;
     }
 
-    public static function computeStatus(int $status): string
+// can't assign int to OrderStatus
+    public function computeStatus(OrderStatus $status): string
     {
         return match ($status) {
-            -1 => 'cancelled',
-            0 => 'processing',
-            1 => 'finished'
+            OrderStatus::CANCELLED => 'cancelled',
+            OrderStatus::PROCESSING => 'processing',
+            OrderStatus::COMPLETED => 'finished',
+            default => 'Invalid'
         };
     }
 
@@ -41,9 +47,14 @@ class OrderDTO
         return $this->createdAt;
     }
 
-    public function getStatus(): string
+    public function getStatus(): OrderStatus
     {
         return $this->status;
+    }
+
+    public function getStatusText(): string
+    {
+        return $this->computeStatus($this->status);
     }
 
     public function getUserEmail(): string
@@ -59,5 +70,10 @@ class OrderDTO
     public function getValue(): float
     {
         return $this->orderValue;
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->status === OrderStatus::COMPLETED;
     }
 }

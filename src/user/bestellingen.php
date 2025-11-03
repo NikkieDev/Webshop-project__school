@@ -38,27 +38,21 @@ $orders = $orderService->getUserMostRecentOrders();
         <?php } else ?>
 
         <?php foreach ($orders as $order) { ?>
-            <?php $orderId = $order['OrderId']; ?>
             <div class="bestelling-wrapper">
                 <div class="bestelling">
                     <div class="bestel-info--wrapper">
-                        <?php if (-1 === $order['OrderStatus']) { ?>
+                        <?php if (OrderStatus::CANCELLED === $order->getStatus()) : ?>
                             <p><strong>GEANNULEERD</strong></p>
-                        <?php } ?>
-                        <p>Bestelling #<?= $orderId ?></p>
-                        <p>Totaal: &euro;<?= $order['OrderTotal']; ?></p>
-                        <p>Besteld op: <?= $order['OrderDate']; ?></p>
+                        <?php elseif (OrderStatus::COMPLETED === $order->getStatus()) : ?>
+                            <p><strong>VERZONDEN</strong></p>
+                        <?php endif ?>
+                        <p>Bestelling #<?= $order->getOrderId(); ?></p>
+                        <p>Totaal: &euro;<?= $order->getValue(); ?></p>
+                        <p>Besteld op: <?= $order->getCreatedAt()->format('Y-m-d'); ?></p>
                     </div>
                     <div class="bestel-acties--wrapper">
-                        <button onclick="reOrder('<?= $orderId ?>')">Opnieuw bestellen</button>
-                        <button onclick="cancelOrder('<?= $orderId ?>')"
-                            <?php if (-1 === $order['OrderStatus']) { ?>
-                                disabled
-                                title="Deze bestelling is al geannuleerd"
-                            <?php } else { ?>
-                                title="Bestelling annuleren"
-                            <?php } ?>
-                            >Annuleren</button>
+                        <button onclick="reOrder('<?= $order->getOrderId(); ?>')">Opnieuw bestellen</button>
+                        <button onclick="cancelOrder('<?= $order->getOrderId(); ?>')" <?= OrderStatus::PROCESSING !== $order->getStatus() ?'disabled':'' ?> >Annuleren</button>
                     </div>
                 </div>
             </div>

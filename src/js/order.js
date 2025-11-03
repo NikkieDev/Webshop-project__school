@@ -1,7 +1,8 @@
 const availableActions = {
     redo: 'reOrder',
     cancel: 'cancelOrder',
-};
+    finish: 'admin/finishOrder',
+}
 
 async function makePostRequest(ajaxCallName, formData) {
     try {
@@ -35,5 +36,11 @@ async function cancelOrder(orderId)
 async function reOrder(orderId)
 {
     await makeOrderRequest(availableActions.redo, orderId);
+    location.reload();
+}
+
+async function finishOrder(orderId)
+{
+    await makeOrderRequest(availableActions.finish, orderId);
     location.reload();
 }
