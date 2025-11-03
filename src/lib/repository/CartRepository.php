@@ -9,7 +9,7 @@ final class CartRepository extends BaseRepository
     public function getUserActiveCartWithItems($userUuid): array|null
     {
         $stmt = $this->getConnection()->prepare("
-            SELECT p.uuid AS ProductId, p.title AS ProductTitle, p.price AS ProductPrice FROM Product as p
+            SELECT p.uuid AS productId, p.title AS productTitle, p.price AS productPrice FROM Product as p
                 INNER JOIN CartItem as ci ON ci.ProductUuid = p.uuid
                 INNER JOIN Cart as c ON c.uuid = ci.CartUuid
             WHERE c.userUuid = :userUuid AND c.status = 0;

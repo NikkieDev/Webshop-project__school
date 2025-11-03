@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `Category`(
 CREATE TABLE IF NOT EXISTS Product(
     uuid VARCHAR(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL DEFAULT 'New Product',
-    price DECIMAL(6,2) NOT NULL DEFAULT '1.99',
+    price DECIMAL(6,2) NOT NULL DEFAULT 1.99,
     `description` VARCHAR(512) DEFAULT "Item description",
     category VARCHAR(36),
     stock INT(4) NOT NULL DEFAULT 0,

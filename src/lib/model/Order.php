@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once "OrderStatus.php";
 
-class OrderDTO
+class Order
 {
     private string $orderId;
     private DateTimeImmutable $createdAt;
@@ -13,20 +13,19 @@ class OrderDTO
     private int $lineItemCount;
     private float $orderValue;
 
-    public static function fromArray(array $data): OrderDTO
+    public static function fromArray(array $data): Order
     {
-        $orderDTO = new self();
-        $orderDTO->orderId = $data["orderId"];
-        $orderDTO->createdAt = new DateTimeImmutable($data["orderCreatedAt"]);
-        $orderDTO->status = OrderStatus::from($data["orderStatus"]);
-        $orderDTO->userEmail = $data['email'] ?? null;
-        $orderDTO->lineItemCount = $data['orderLineItems'];
-        $orderDTO->orderValue = (float) $data['orderValue'];
+        $order = new self();
+        $order->orderId = $data["orderId"];
+        $order->createdAt = new DateTimeImmutable($data["orderCreatedAt"]);
+        $order->status = OrderStatus::from($data["orderStatus"]);
+        $order->userEmail = $data['email'] ?? null;
+        $order->lineItemCount = $data['orderLineItems'];
+        $order->orderValue = (float) $data['orderValue'];
 
-        return $orderDTO;
+        return $order;
     }
 
-// can't assign int to OrderStatus
     public function computeStatus(OrderStatus $status): string
     {
         return match ($status) {

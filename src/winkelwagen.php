@@ -35,13 +35,13 @@ $referrer = $_GET['referrer'];
 
                 <div class="cart-items--wrapper">
                     <?php foreach ($cartManager->getItems() as $product) {?>
-                        <?php $productUuid = $product['ProductId']; ?>
+                        <?php $productUuid = $product['productId']; ?>
 
                         <div class="cart-item--wrapper">
                             <div class="cart-item">
                                 <div class="cart-item__meta--wrapper">
-                                    <h4><?= $product['ProductTitle']; ?></h4>
-                                    <p>&euro; <?= $product['ProductPrice']; ?></p>
+                                    <h4><?= $product['productTitle']; ?></h4>
+                                    <p>&euro; <?= $product['productPrice']; ?></p>
                                 </div>
                                 <div class="cart-item__dynamic--wrapper">
                                     <div class="cart-item__amount--wrapper">

@@ -101,17 +101,17 @@ class CartManager
         $this->createCart();
     }
 
-    private function quantifyItems(array $items): mixed
+    public function quantifyItems(array $items): mixed
     {
         $quantified = [];
 
         foreach ($items as $item) {
-            if (!isset($quantified[$item['ProductTitle']])) {
-                $quantified[$item['ProductTitle']] = $item;
-                $quantified[$item['ProductTitle']]['quantity'] = 0;
+            if (!isset($quantified[$item['productTitle']])) {
+                $quantified[$item['productTitle']] = $item;
+                $quantified[$item['productTitle']]['quantity'] = 0;
             }
 
-            $quantified[$item['ProductTitle']]['quantity']++;
+            $quantified[$item['productTitle']]['quantity']++;
         }
 
         return $quantified;

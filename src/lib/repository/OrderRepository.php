@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once "BaseRepository.php";
 require_once __DIR__ . '/../model/CreateOrderProps.php';
 require_once __DIR__ .'/../model/Order.php';
+require_once __DIR__ .'/../model/OrderLineItem.php';
 
 final class OrderRepository extends BaseRepository
 {
@@ -79,7 +80,7 @@ final class OrderRepository extends BaseRepository
         ");
 
         $stmt->execute();
-        $results = array_map(fn($order) => OrderDTO::fromArray($order), $stmt->fetchAll(), $stmt->fetchAll());
+        $results = array_map(fn($order) => Order::fromArray($order), $stmt->fetchAll(), $stmt->fetchAll());
 
         if (!$results) {
             return [];
@@ -99,7 +100,7 @@ final class OrderRepository extends BaseRepository
         ");
 
         $stmt->execute([':userId' => $userUuid]);
-        $results = array_map(fn($order) => OrderDTO::fromArray($order), $stmt->fetchAll(), $stmt->fetchAll());
+        $results = array_map(fn($order) => Order::fromArray($order), $stmt->fetchAll(), $stmt->fetchAll());
 
         if (!$results) {
             return [];
@@ -117,4 +118,23 @@ final class OrderRepository extends BaseRepository
         $stmt->execute([':uuid' => $orderUuid]);
     }
 
+    public function getOrderItems(string $orderUuid): array
+    {
+        $stmt = $this->getConnection()->prepare('
+            SELECT ci.uuid AS lineItemId, p.price AS productPrice, p.title AS productTitle, p.stock AS stockQuantity FROM CartItem ci
+            INNER JOIN Product p ON p.uuid = ci.ProductUuid
+            INNER JOIN `Order` o ON o.CartUuid = ci.CartUuid
+            WHERE o.uuid = :uuid
+        ');
+
+        $stmt->execute([':uuid'=> $orderUuid]);
+        $results = $stmt->fetchAll();
+        $results = array_map(fn($lineItem) => OrderLineItemDTO::fromArray($lineItem), $stmt->fetchAll());
+
+        if (!$results) {
+            return [];
+        }
+
+        return $results;
+    }
 }
