@@ -72,12 +72,4 @@ class OrderService
 
         $this->orderRepository->createOrder($existingOrder['CartUuid'], $props);
     }
-
-    public function getOrderItems(string $orderUuid): array
-    {
-        $lineItems = $this->orderRepository->getOrderItems($orderUuid);
-        $lineItemsQuantified = $this->cartManager->quantifyItems($lineItems);
-
-        return $lineItemsQuantified;
-    }
 }

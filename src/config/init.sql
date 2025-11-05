@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS User(
     uuid VARCHAR(36) PRIMARY KEY,
     email VARCHAR(64),
     username VARCHAR(32) DEFAULT 'Guest',
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `password` VARCHAR(128),
     `type` VARCHAR(32) DEFAULT 'guest' NOT NULL
 );

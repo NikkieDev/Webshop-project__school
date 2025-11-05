@@ -83,7 +83,7 @@ class CartManager
         $items = $this->cartRepository->getUserActiveCartWithItems($this->fingerprintService->getUser());
 
         foreach ($items as $item) {
-            $value += (float) $item['ProductPrice'];
+            $value += (float) $item['productPrice'];
         }
 
         return $value;

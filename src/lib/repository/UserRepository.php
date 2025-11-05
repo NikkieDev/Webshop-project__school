@@ -7,6 +7,20 @@ require_once __DIR__ . '/../model/UserType.php';
 
 final class UserRepository extends BaseRepository
 {
+    public function getCustomersWithOrderAmount(): array
+    {
+        $stmt = $this->getConnection()->prepare('
+            SELECT u.uuid, u.username, u.email, u.createdAt FROM User u
+            WHERE u.`type` = "user"
+        ');
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        if (!$results) {
+            return [];
+        }
+
+        return $results;
+    }
 
     public function getUser($uuid)
     {

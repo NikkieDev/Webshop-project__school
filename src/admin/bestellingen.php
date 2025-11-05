@@ -45,10 +45,9 @@ $orders = $orderRepository->getMostRecentOrdersFull();
                         <td><?= $order->getStatusText() ?></td>
                         <td class="actions">
                             <?php if (OrderStatus::PROCESSING === $order->getStatus()) : ?>
-                                <button onclick="cancelOrder('<?= $order->getOrderId() ?>')" class="icon-btn" title="Annuleren"><img class="icon" src="/assets/close.png"></a>
-                                <button onclick="finishOrder('<?= $order->getOrderId() ?>')" class="icon-btn" title="Versturen"><img class="icon" src="/assets/sent.png"></a>
+                                <button onclick="cancelOrder('<?= $order->getOrderId() ?>')" class="icon-btn" title="Annuleren"><img class="icon" src="/assets/close.png"></button>
+                                <button onclick="finishOrder('<?= $order->getOrderId() ?>')" class="icon-btn" title="Versturen"><img class="icon" src="/assets/sent.png"></button>
                             <?php endif ?>
-                            <a href="/admin/order.php?uuid=<?= $order->getOrderId() ?>" class="icon-btn" title="Bekijken"><img src="/assets/eye.png" class="icon"></a>
                         </td>
                     </tr>
                 <?php endforeach?>

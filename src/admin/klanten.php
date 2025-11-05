@@ -1,5 +1,12 @@
 <?php
+
+declare(strict_types= 1);
+
 $activeTab = 'klanten';
+
+require_once __DIR__ .'/../lib/repository/UserRepository.php';
+
+$users = (new UserRepository())->getCustomersWithOrderAmount();
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +19,26 @@ $activeTab = 'klanten';
     <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
-    <?php include_once './elements/_sidebar-nav.php' ?>
+    <div class="admin-wrapper">
+        <?php include_once './elements/_sidebar-nav.php' ?>
+        <main class="admin-content">
+            <table>
+                <tr>
+                    <th>Klant</th>
+                    <th>Email</th>
+                    <th>Gebruikersnaam</th>
+                    <th>Registratiedatum</th>
+                </tr>
+                <?php foreach ($users as $user): ?>
+                    <tr>
+                        <td><?= $user['uuid'] ?></td>
+                        <td><?= $user['email'] ?></td>
+                        <td><?= $user['username'] ?></td>
+                        <td><?= $user['createdAt'] ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </table>
+        </main>
+    </div>
 </body>
 </html>
