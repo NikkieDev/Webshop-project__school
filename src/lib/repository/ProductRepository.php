@@ -8,7 +8,7 @@ final class ProductRepository extends BaseRepository
 {
     public function getProducts(): array
     {
-        $stmt = $this->getConnection()->prepare("SELECT uuid, title, price FROM Product");
+        $stmt = $this->getConnection()->prepare("SELECT uuid, title, price, stock FROM Product");
         $stmt->execute();
         
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -35,5 +35,14 @@ final class ProductRepository extends BaseRepository
         $stmt->execute([':category'=> $category]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $results;
+    }
+
+    public function updateStock(string $uuid, int $stock): void
+    {
+        $stmt = $this->getConnection()->prepare('
+            UPDATE Product SET stock = :stock WHERE uuid = :uuid
+        ');
+
+        $stmt->execute([':stock' => $stock, ':uuid' => $uuid]);
     }
 }

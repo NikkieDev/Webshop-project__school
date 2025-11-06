@@ -3,9 +3,7 @@
     <div class="side-nav-items">
         <a href="/admin/bestellingen.php" class="side-nav--item <?= $activeTab === 'bestellingen' ? 'active' : '' ?>">Bestellingen</a>
         <a href="/admin/klanten.php" class="side-nav--item <?= $activeTab === 'klanten' ? 'active' : '' ?>">Klanten</a>
-        <a href="/admin/artikelen.php" class="side-nav--item <?= $activeTab === 'assortiment' ? 'active' : '' ?>">Assortiment</a>
         <a href="/admin/voorraad.php" class="side-nav--item <?= $activeTab === 'voorraad' ? 'active' : '' ?>">Voorraad</a>
-        <a href="/admin/tickets.php" class="side-nav--item <?= $activeTab === 'tickets' ? 'active' : '' ?>">Tickets</a>
         <a href="/" class="side-nav--item">Terug naar shop</a>
         <a href="/ajax/logout.php" class="side-nav--item">Uitloggen</a>
     </div>
