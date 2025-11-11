@@ -10,7 +10,6 @@ require_once "lib/SessionManager.php";
 $fingerprint = FingerprintService::getInstance();
 $cartManager = CartManager::getInstance();
 $session = SessionManager::getInstance();
-$referrer = $_GET['referrer'];
 
 ?>
 
@@ -27,14 +26,14 @@ $referrer = $_GET['referrer'];
     <?php include "partials/header.php" ?>
 
     <section class="winkelwagen-wrapper">
-        <?php if ($cartManager->getSize() === 0) { ?>
+        <?php if ($cartManager->getSize() === 0) : ?>
             <div class="flash-card flash-warning"><span class="flash-content">Uw winkelwagen is leeg</span></div>
-        <?php } else { ?>
+        <?php else : ?>
             <div class="cart-content--wrapper">
                 <h3>Deze <?= $cartManager->getSize() ?> producten zitten in uw winkelwagen</h3>
 
                 <div class="cart-items--wrapper">
-                    <?php foreach ($cartManager->getItems() as $product) {?>
+                    <?php foreach ($cartManager->getItems() as $product) : ?>
                         <?php $productUuid = $product['productId']; ?>
 
                         <div class="cart-item--wrapper">
@@ -54,12 +53,11 @@ $referrer = $_GET['referrer'];
                                 </div>
                             </div>
                         </div>
-                    <?php } ?>
-                    <!-- show total + add verzendkosten -->
+                    <?php endforeach ?>
                     <a href="afrekenen.php">Afrekenen</a>
                 </div>
             </div>
-        <?php } ?>
+        <?php endif ?>
     </section>
 </body>
 </html>

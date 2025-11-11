@@ -42,6 +42,7 @@ if (!$orderExists) {
     <section class="success-wrapper center col">
         <h2>Bedankt voor uw bestelling!</h2>
         <span class="success-bestelnummer">#<?= $orderId ?></span>
+        <span>Wij werken er hard aan om uw bestelling binnen 3 werkdagen aan de deur te leveren.</span>
         <a href="/" class="btn">Terug</a>
     </section>
 </body>

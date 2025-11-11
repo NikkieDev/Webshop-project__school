@@ -10,7 +10,7 @@ require_once 'lib/FingerprintService.php';
 $fingerprint = FingerprintService::getInstance();
 
 if (!$fingerprint->isGuest()) {
-    header("Location: index.php?referrer=account-aanmaken.php");
+    header("Location: index.php");
     exit;
 }
 

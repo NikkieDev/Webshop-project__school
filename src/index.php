@@ -6,7 +6,10 @@ require_once 'lib/init.php';
 
 require_once isset($_GET['cat']) ? 'lib/render/loadProductsByCategory.php' : 'lib/render/loadProducts.php';
 
-require_once 'lib/render/loadCategories.php';
+require_once "lib/repository/CategoryRepository.php";
+
+$categoryRepository = new CategoryRepository();
+$categories = $categoryRepository->getCategories();
 
 ?>
 
@@ -22,13 +25,13 @@ require_once 'lib/render/loadCategories.php';
     <?php include "partials/header.php" ?>
     <section class="home-wrapper">
         <div class="category-wrapper">
-            <?php foreach ($categories as $category) { ?>
+            <?php foreach ($categories as $category) : ?>
                 <?php $cat = $category['title']; ?>
                 <a href="index.php?cat=<?= $cat ?>" class="category"> <?= $cat ?></a>
-            <?php } ?>
+            <?php endforeach ?>
         </div>
         <div class="products">
-            <?php foreach ($products as $product) { ?>
+            <?php foreach ($products as $product) : ?>
                 <div class="product-wrapper">
                     <div class="product">
                         <?php $productUuid = $product['uuid']; ?>
@@ -37,7 +40,7 @@ require_once 'lib/render/loadCategories.php';
                         <button onclick="addToCart('<?= $productUuid ?>')">Toevoegen</button>
                     </div>
                 </div>
-            <?php } ?>
+            <?php endforeach ?>
         </div>
     </section>
 </body>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . "/lib/ProductService.php";
+require_once __DIR__ . "/lib/repository/ProductRepository.php";
 require_once __DIR__ . '/lib/init.php';
 
 if (!isset($_GET['pid'])) {
@@ -12,7 +12,8 @@ if (!isset($_GET['pid'])) {
 
 $pid = $_GET["pid"];
 
-$product = ProductService::getInstance()->getProductById($pid);
+$productRepository = new ProductRepository();
+$product = $productRepository->findById($uuid);
 
 if (!$product) {
     header("Location: /error/404.php?return=/index.php");
@@ -82,7 +83,7 @@ require_once "./lib/render/loadProductsByCategory.php";
         <div class="other-from-category--wrapper">
             <h3>Bekijk ook deze producten</h3>
             <div class="other-from-category">
-                <?php foreach ($products as $productInCategory) { ?>
+                <?php foreach ($products as $productInCategory) : ?>
                     <?php if ($productInCategory['uuid'] == $pid) continue; ?>
                     <div class="product-wrapper">
                         <div class="product">
@@ -92,14 +93,14 @@ require_once "./lib/render/loadProductsByCategory.php";
                             <button onclick="addToCart('<?= $productUuid ?>')">Toevoegen</button>
                         </div>
                     </div>
-                <?php } ?>
+                <?php endforeach ?>
             </div>
         </div>
 
         <div class="recently-seen--wrapper">
             <h3>Bekijk geschiedenis</h3>
             <div class="recently-seen">
-                <?php foreach (array_reverse($recentlySeenIds) as $recentlySeenId) { ?>
+                <?php foreach (array_reverse($recentlySeenIds) as $recentlySeenId) : ?>
                     <?php $recentlySeenItem = ProductService::getInstance()->getProductById($recentlySeenId) ?>
                     <?php if (!$recentlySeenItem) continue; ?>
                     <div class="product-wrapper">
@@ -110,7 +111,7 @@ require_once "./lib/render/loadProductsByCategory.php";
                             <button onclick="addToCart('<?= $productUuid ?>')">Toevoegen</button>
                         </div>
                     </div>
-                <?php } ?>
+                <?php endforeach ?>
             </div>
         </div>
     </section>

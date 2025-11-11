@@ -44,7 +44,6 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/lib.css">
-    <!-- <link rel="stylesheet" href="/css/afrekenen.css"> -->
     <title>Afrekenen</title>
 </head>
 <body>

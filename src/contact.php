@@ -19,13 +19,13 @@ if ('POST' === $_SERVER['REQUEST_METHOD']) {
     exit;
 }
 
-require_once "lib/SessionManager.php";
 require_once "lib/FingerprintService.php";
 
 $email = "";
 $isGuest = FingerprintService::getInstance()->isGuest();
 
 if (!$isGuest) {
+    require_once "lib/SessionManager.php";
     $email = SessionManager::getInstance()->getData('email');
 }
 
