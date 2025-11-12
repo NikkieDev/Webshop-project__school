@@ -7,7 +7,7 @@ require_once __DIR__ . "/../lib/FingerprintService.php";
 require_once __DIR__ . "/../lib/SessionManager.php";
 require_once __DIR__ . "/../lib/UserService.php";
 
-function requiredBodyExists(array $body): bool
+function requiredBodyExists(array $body): bool // Util::verifyPropertyExists ??
 {
     foreach ($body as $field) { 
         if (!isset($_POST[$field])) {
@@ -83,11 +83,11 @@ if ("POST" === $_SERVER["REQUEST_METHOD"]) {
 
     <section class="instellingen-wrapper">
         <div class="flash-wrapper">
-            <?php if (isset($_GET['error'])) { ?>
+            <?php if (isset($_GET['error'])) : ?>
                 <div class="flash-card flash-warning"><span class="flash-content"><?= $_GET['error']; ?></span></div>
-            <?php } else if (isset($_GET['msg'])) { ?>
+            <?php elseif (isset($_GET['msg'])) : ?>
                 <div class="flash-card flash-success"><span class="flash-content"><?= $_GET['msg']; ?></span></div>
-            <?php } ?>
+            <?php endif ?>
         </div>
 
 

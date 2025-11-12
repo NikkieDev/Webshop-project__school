@@ -27,7 +27,7 @@ $orders = $orderService->getUserMostRecentOrders();
 <body>
     <?php include __DIR__ ."/../partials/header.php" ?>
     <section class="bestellingen-wrapper">
-        <?php if (0 === count($orders)) { ?>
+        <?php if (0 === count($orders)) : ?>
             <div class="flash-wrapper">
                 <div class="flash-card flash-warning">
                     <span class="flash-content">
@@ -35,28 +35,28 @@ $orders = $orderService->getUserMostRecentOrders();
                     </span>
                 </div>
             </div>
-        <?php } else ?>
-
-        <?php foreach ($orders as $order) { ?>
-            <div class="bestelling-wrapper">
-                <div class="bestelling">
-                    <div class="bestel-info--wrapper">
-                        <?php if (OrderStatus::CANCELLED === $order->getStatus()) : ?>
-                            <p><strong>GEANNULEERD</strong></p>
-                        <?php elseif (OrderStatus::COMPLETED === $order->getStatus()) : ?>
-                            <p><strong>VERZONDEN</strong></p>
-                        <?php endif ?>
-                        <p>Bestelling #<?= $order->getOrderId(); ?></p>
-                        <p>Totaal: &euro;<?= $order->getValue(); ?></p>
-                        <p>Besteld op: <?= $order->getCreatedAt()->format('Y-m-d'); ?></p>
-                    </div>
-                    <div class="bestel-acties--wrapper">
-                        <button onclick="reOrder('<?= $order->getOrderId(); ?>')">Opnieuw bestellen</button>
-                        <button onclick="cancelOrder('<?= $order->getOrderId(); ?>')" <?= OrderStatus::PROCESSING !== $order->getStatus() ?'disabled':'' ?> >Annuleren</button>
+        <?php else : ?>
+            <?php foreach ($orders as $order) : ?>
+                <div class="bestelling-wrapper">
+                    <div class="bestelling">
+                        <div class="bestel-info--wrapper">
+                            <?php if (OrderStatus::CANCELLED === $order->getStatus()) : ?>
+                                <p><strong>GEANNULEERD</strong></p>
+                            <?php elseif (OrderStatus::COMPLETED === $order->getStatus()) : ?>
+                                <p><strong>VERZONDEN</strong></p>
+                            <?php endif ?>
+                            <p>Bestelling #<?= $order->getOrderId(); ?></p>
+                            <p>Totaal: &euro;<?= $order->getValue(); ?></p>
+                            <p>Besteld op: <?= $order->getCreatedAt()->format('Y-m-d'); ?></p>
+                        </div>
+                        <div class="bestel-acties--wrapper">
+                            <button onclick="reOrder('<?= $order->getOrderId(); ?>')">Opnieuw bestellen</button>
+                            <button onclick="cancelOrder('<?= $order->getOrderId(); ?>')" <?= OrderStatus::PROCESSING !== $order->getStatus() ?'disabled':'' ?> >Annuleren</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php } ?>
+            <?php endforeach ?>
+        <?php endif ?>
     </section>
 </body>
 </html>
