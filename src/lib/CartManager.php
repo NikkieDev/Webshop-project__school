@@ -27,7 +27,7 @@ class CartManager
     {
         $this->fingerprintService = FingerprintService::getInstance();
         $this->cartRepository = new CartRepository();
-        $this->session = SessionManager::getInstance();
+        $this->session = new SessionManager();
 
         $this->cart = $this->cartRepository->getUserActiveCart($this->fingerprintService->getUser());
         $this->session->set('cart', $this->cart);

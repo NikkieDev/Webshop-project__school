@@ -9,18 +9,22 @@ class SessionManager
     private static ?SessionManager $instance = null;
     private UserService $userService;
 
-    public static function getInstance(): SessionManager|null
+    // public static function getInstance(): SessionManager|null
+    // {
+    //     if (null === (new UserService())->getUser()) {
+    //         return null;
+    //     }
+
+    //     return self::$instance ??= new SessionManager();
+    // }
+
+    public function __construct()
     {
-        if (null === UserService::getInstance()->getUser()) {
-            return null;
+        $this->userService = new UserService();
+
+        if (!$this->userService->getUser()) {
+            return;
         }
-
-        return self::$instance ??= new SessionManager();
-    }
-
-    private function __construct()
-    {
-        $this->userService = UserService::getInstance();
 
         if (!isset($_SESSION[$this->userService->getUser()])) {
             $_SESSION[$this->userService->getUser()] = [];

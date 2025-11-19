@@ -9,7 +9,7 @@ require_once "lib/SessionManager.php";
 
 $fingerprint = FingerprintService::getInstance();
 $cartManager = CartManager::getInstance();
-$session = SessionManager::getInstance();
+$session = new SessionManager();
 
 ?>
 

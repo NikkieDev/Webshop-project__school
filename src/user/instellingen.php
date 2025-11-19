@@ -7,6 +7,8 @@ require_once __DIR__ . "/../lib/FingerprintService.php";
 require_once __DIR__ . "/../lib/SessionManager.php";
 require_once __DIR__ . "/../lib/UserService.php";
 
+$userService = new UserService();
+
 function requiredBodyExists(array $body): bool // Util::verifyPropertyExists ??
 {
     foreach ($body as $field) { 
@@ -20,6 +22,7 @@ function requiredBodyExists(array $body): bool // Util::verifyPropertyExists ??
 
 function resetPassword(): void
 {
+    global $userService;
     $passwordVerified = FingerprintService::getInstance()->verifyPassword($_POST['old-password']);
         
     if (!$passwordVerified) {
@@ -30,12 +33,13 @@ function resetPassword(): void
         exit;
     }
 
-    UserService::getInstance()->setPassword($_POST['new-password']);
+    $userService->setPassword($_POST['new-password']);
     return;
 }
 
 function resetMail()
 {
+    global $userService;
     $passwordVerified = FingerprintService::getInstance()->verifyPassword($_POST['password']);
 
     if (!$passwordVerified) {
@@ -43,7 +47,7 @@ function resetMail()
         exit;
     }
 
-    UserService::getInstance()->setMail($_POST['new-mail']);
+    $userService->setMail($_POST['new-mail']);
     return;
 }
 

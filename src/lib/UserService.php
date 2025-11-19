@@ -8,17 +8,17 @@ require_once "model/User.php";
 
 class UserService
 {
-    private static ?UserService $instance = null;
+    // private static ?UserService $instance = null;
 
     private UserRepository $userRepository;
     private CookieManager $cookieManager;
 
-    public static function getInstance(): UserService
-    {
-        return self::$instance ??= new UserService();
-    }
+    // public static function getInstance(): UserService
+    // {
+    //     return self::$instance ??= new UserService();
+    // }
 
-    private function __construct()
+    public function __construct()
     {
         $this->userRepository = new UserRepository();
         $this->cookieManager = new CookieManager();
@@ -44,7 +44,7 @@ class UserService
         return $_COOKIE['user'];
     }
 
-    public function setGuest(User &$user = null)
+    public function setGuest(?User &$user = null)
     {
         $newUserUuid = $this->userRepository->createGuest();
 

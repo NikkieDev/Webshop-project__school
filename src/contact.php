@@ -26,7 +26,7 @@ $isGuest = FingerprintService::getInstance()->isGuest();
 
 if (!$isGuest) {
     require_once "lib/SessionManager.php";
-    $email = SessionManager::getInstance()->getData('email');
+    $email = (new SessionManager())->getData('email');
 }
 
 ?>

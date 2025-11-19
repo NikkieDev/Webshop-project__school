@@ -8,8 +8,8 @@ require_once __DIR__ . "/../lib/OrderService.php";
 require_once __DIR__ . "/../lib/SessionManager.php";
 
 $fingerprint = FingerprintService::getInstance();
-$orderService = OrderService::getInstance();
-$session = SessionManager::getInstance();
+$orderService = new OrderService();
+$session = new SessionManager();
 
 $orders = $orderService->getUserMostRecentOrders();
 ?>

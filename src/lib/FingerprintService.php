@@ -28,9 +28,9 @@ class FingerprintService
 
     private function __construct()
     {
-        $this->session = SessionManager::getInstance();
+        $this->session = new SessionManager();
         $this->userRepository = new UserRepository();
-        $this->userService = UserService::getInstance();
+        $this->userService = new UserService();
         $this->user = new User();
         
         if (empty($_COOKIE['user'])) {

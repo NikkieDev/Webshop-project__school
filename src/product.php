@@ -13,7 +13,7 @@ if (!isset($_GET['pid'])) {
 $pid = $_GET["pid"];
 
 $productRepository = new ProductRepository();
-$product = $productRepository->findById($uuid);
+$product = $productRepository->findById($pid);
 
 if (!$product) {
     header("Location: /error/404.php?return=/index.php");
@@ -101,7 +101,7 @@ require_once "./lib/render/loadProductsByCategory.php";
             <h3>Bekijk geschiedenis</h3>
             <div class="recently-seen">
                 <?php foreach (array_reverse($recentlySeenIds) as $recentlySeenId) : ?>
-                    <?php $recentlySeenItem = ProductService::getInstance()->getProductById($recentlySeenId) ?>
+                    <?php $recentlySeenItem = $productRepository->findById($recentlySeenId) ?>
                     <?php if (!$recentlySeenItem) continue; ?>
                     <div class="product-wrapper">
                         <div class="product">

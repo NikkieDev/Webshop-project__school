@@ -22,7 +22,7 @@ if (!isset($_POST['order'])) {
 $order = $_POST['order'];
 
 try {
-    OrderService::getInstance()->cancelOrder($order);
+    (new OrderService())->cancelOrder($order);
     http_response_code(200);
     echo json_encode(['message'=> 'Bestelling geannuleerd']);
 } catch (Exception $e) {

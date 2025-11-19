@@ -9,7 +9,7 @@ require_once "SessionManager.php";
 require_once "CookieManager.php";
 
 $fingerprint = FingerprintService::getInstance();
-$session = SessionManager::getInstance();
+$session = new SessionManager();
 $cookieManager = new CookieManager();
 
 ?>

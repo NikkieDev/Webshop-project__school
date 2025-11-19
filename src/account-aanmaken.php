@@ -9,7 +9,7 @@ require_once "lib/UserService.php";
 require_once 'lib/FingerprintService.php';
 
 $fingerprint = FingerprintService::getInstance();
-$userService = UserService::getInstance();
+$userService = new UserService();
 
 if (!$fingerprint->isGuest()) {
     header("Location: index.php?referrer=account-aanmaken.php");

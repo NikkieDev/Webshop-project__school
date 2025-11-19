@@ -3,7 +3,7 @@ require_once __DIR__. "/../lib/SessionManager.php";
 require_once __DIR__."/../lib/FingerprintService.php";
 
 $fingerprint = FingerprintService::getInstance();
-$session = SessionManager::getInstance();
+$session = new SessionManager();
 
 ?>
 <section class="header-wrapper">

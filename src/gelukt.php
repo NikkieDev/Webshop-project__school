@@ -10,7 +10,7 @@ if (!isset($_GET['orderId'])) {
 
 $orderId = $_GET['orderId'];
 
-$orderService = OrderService::getInstance();
+$orderService = new OrderService();
 
 $orderExists = $orderService->verifyOrderExistance($orderId);
 

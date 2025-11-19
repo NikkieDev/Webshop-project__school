@@ -14,15 +14,14 @@ class OrderService
     private OrderRepository $orderRepository;
     private CartManager $cartManager;
 
+    // public static function getInstance(): OrderService
+    // {
+    //     return self::$instance ??= new OrderService();
+    // }
 
-    public static function getInstance(): OrderService
-    {
-        return self::$instance ??= new OrderService();
-    }
-
-    private function __construct() {
+    public function __construct() {
         $this->orderRepository = new OrderRepository();
-        $this->userService = UserService::getInstance();
+        $this->userService = new UserService();
         $this->cartManager = CartManager::getInstance();
     }
 

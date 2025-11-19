@@ -22,7 +22,7 @@ if (!isset($_POST['order'])) {
 $order = $_POST['order'];
 
 try {
-    OrderService::getInstance()->reOrder($order);
+    (new OrderService())->reOrder($order);
     http_response_code(200);
     echo json_encode(['message'=> 'Order re-placed']);
 } catch (Exception $e) {

@@ -11,7 +11,7 @@ require_once 'lib/Util.php';
 
 $fingerprint = FingerprintService::getInstance();
 $cartManager = CartManager::getInstance();
-$orderService = OrderService::getInstance();
+$orderService = new OrderService();
 
 if ($fingerprint->isGuest()) {
     header('Location: account-aanmaken.php?referrer=afrekenen.php');
